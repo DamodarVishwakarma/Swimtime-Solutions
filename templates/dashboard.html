@@ -1,0 +1,2597 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block sidebar_content %}
+    <a _ngcontent-nwk-c28="" href={% url 'dashboard_view' %} class="active">
+        <a _ngcontent-nwk-c28="" href={% url 'dashboard_view' %} class="active">
+            <div _ngcontent-nwk-c28="" class="tab-link first">
+                <div _ngcontent-nwk-c28="" class="img-div img-div-one"></div>
+                <h3 _ngcontent-nwk-c28="">INSTRUCTOR</h3></div>
+        </a>
+        <a _ngcontent-nwk-c28="" href={% url 'schedule' %} class="">
+            <div _ngcontent-nwk-c28="" class="tab-link">
+                <div _ngcontent-nwk-c28="" class="img-div img-div-two"></div>
+                <h3 _ngcontent-nwk-c28="">MY SCHEDULE</h3></div>
+        </a>
+        <a _ngcontent-nwk-c28="" href={% url 'repayment_classes' %} class="">
+            <div _ngcontent-nwk-c28="" class="tab-link">
+                <div _ngcontent-nwk-c28="" class="img-div img-div-four"></div>
+                <h3 _ngcontent-nwk-c28="">PAYMENT</h3></div>
+        </a>
+
+        <a _ngcontent-nwk-c28="" id="logout_link" data-toggle="tooltip" title="Log Out" href="{% url 'LogoutView' %}"
+           class="">
+            <div _ngcontent-nwk-c28="" class="tab-link">
+                <div _ngcontent-nwk-c28="" class="img-div ">
+                    <img
+                            _ngcontent-uas-c28=""
+                            src={% static 'assets/img/logout.png' %}
+                                    alt="img">
+                </div>
+                <h3 _ngcontent-nwk-c28="">LOGOUT</h3></div>
+        </a>
+
+
+        <a _ngcontent-nwk-c28="" id="profile_link" data-toggle="modal" data-target="#profileEdit" title="Update Profile"
+           class="" onclick="checkdate()">
+            <div _ngcontent-nwk-c28="" class="tab-link">
+                <div _ngcontent-nwk-c28="" class="img-div ">
+                    <img _ngcontent-uas-c28="" alt="Profile"
+                         src="http://167.172.131.164/media/Images/profile/default.png">
+                </div>
+                <h3 _ngcontent-nwk-c28="">PROFILE</h3></div>
+        </a></a>
+
+
+{% endblock %}
+{% block page_content %}
+
+    <style>
+
+        .padding-time-select {
+            max-width: 200px;
+            cursor: pointer;
+            font-weight: 600;
+            color: black;
+            justify-content: center;
+            background: #d4d1d1;
+            display: inline-block;
+            border-radius: 5px;
+            border: 1px solid #FFFFFF;
+            font-family: 'Montserrat', sans-serif;
+            width: 200px;
+            height: 45px;
+            padding: 10px;
+            font-size: 14px;
+            /* margin-right: 10px; */
+            letter-spacing: 0.5px;
+            opacity: 1;
+            float: none;
+            line-height: 20px;
+        }
+
+        .to-right {
+            float: right;
+        }
+
+
+    </style>
+
+    {% if res_data %}
+        <script>
+            alert("Payment Successful ! ")
+            window.location.href = "{%  url 'dashboard_view' %}";
+        </script>
+    {% endif %}
+    <app-dashboard _nghost-ygs-c30="" style="z-index: 2;">
+
+        <div _ngcontent-ygs-c30="" class="col-md-11 content">
+            <div _ngcontent-ygs-c30="" class="main-content">
+                <div _ngcontent-ygs-c30="" class="container">
+                    <div _ngcontent-ygs-c30="" class="row">
+                        {% include 'message.html' %}
+                        <div _ngcontent-ygs-c30="" class="container-fluid">
+                            <div _ngcontent-ygs-c30="" class="row">
+                                <div _ngcontent-ygs-c30="" class="content profile">
+                                    <div _ngcontent-ygs-c30="" class="profile-pic-section">
+                                        <div _ngcontent-ygs-c30="" class="content-section">
+
+                                            <div _ngcontent-ygs-c30="" class="container">
+                                                <div _ngcontent-ygs-c30="" class="row">
+                                                    <div _ngcontent-ygs-c30="" class="col-md-12"><img
+                                                            _ngcontent-ygs-c30="" alt=""
+                                                            src="{{ first_name.profile_img }}" style="height:200px;">
+
+
+                                                        <!----><h3
+                                                                _ngcontent-ygs-c30=""
+                                                                style="text-transform: capitalize;">{{ first_name.first_name }} {{ first_name.last_name }}</h3>
+
+                                                        <p _ngcontent-ygs-c30="" class="profileAddress"><i
+                                                                _ngcontent-ygs-c30=""
+                                                                class="fa fa-map-marker"></i>{{ first_name.address }}
+                                                        </p><!---->
+                                                        <!--  <div _ngcontent-ygs-c30="" class="btn-div"><a
+                                                                  _ngcontent-ygs-c30="" class="unverified"><i
+                                                                  _ngcontent-ygs-c30="" class="fa fa-user"></i>Unrated
+                                                              Tutor</a></div> -->
+                                                    </div><!----></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div _ngcontent-ygs-c30="" class="main-content profile-tab">
+                                        <div _ngcontent-ygs-c30="" class="course-main-div">
+                                            <div _ngcontent-ygs-c30="" class="ul-course-div">
+                                                <ul _ngcontent-ygs-c30="" class="nav nav-tabs">
+                                                    <li _ngcontent-ygs-c30="" class="active"><a
+                                                            _ngcontent-ygs-c30="" data-toggle="tab" href="#course">COURSES
+                                                        AND SCHEDULE</a></li>
+                                                    <li _ngcontent-ygs-c30=""><a _ngcontent-ygs-c30=""
+                                                                                 data-toggle="tab" href="#about">ABOUT
+                                                        THE TRAINER</a></li>
+                                                </ul>
+                                            </div>
+                                            <div _ngcontent-ygs-c30="" class="tab-content">
+                                                <div _ngcontent-ygs-c30="" id="course"
+                                                     class="tab-pane fade in active">
+                                                    <div _ngcontent-ygs-c30="" class="container">
+                                                        <div _ngcontent-ygs-c30="" class="profile-div-bloack">
+                                                            <div _ngcontent-ygs-c30="" class="head"><h3
+                                                                    _ngcontent-ygs-c30="">COURSES AVAILABLE </h3>
+                                                            </div>
+                                                            <div _ngcontent-ygs-c30="" class="row">
+                                                                {% if data %}
+                                                                    {% for classes in data %}
+
+
+                                                                        <div _ngcontent-ygs-c30=""
+                                                                             class="col-md-4 col-sm-6">
+                                                                            <div _ngcontent-ygs-c30=""
+                                                                                 class="profile-block">
+                                                                                <div _ngcontent-ygs-c30=""
+                                                                                     class="img-div">
+                                                                                    <img _ngcontent-ygs-c30=""
+                                                                                         alt="thumbnail image"
+                                                                                         src="{{ classes.thumbnail_image }}">
+                                                                                </div>
+                                                                                <div _ngcontent-ygs-c30=""
+                                                                                     class="content-div"><p
+                                                                                        _ngcontent-ygs-c30=""
+                                                                                        class="p-tag">
+                                                                                    <span _ngcontent-ygs-c30=""
+
+                                                                                            {% for i in profile_detail %}
+                                                                                                {% if i.language is not None %}
+                                                                                          class="tag">{{ i.language }}
+                                                                                                {% else %}
+                                                                                                    class="tag">English
+                                                                                                {% endif %}
+                                                                                                </span>
+                                                                                            {% endfor %}
+                                                                                    <!----></p>
+                                                                                    <div _ngcontent-ygs-c30=""
+                                                                                         class="title">{{ classes.title }}
+                                                                                    </div>
+
+                                                                                    <p _ngcontent-ygs-c30=""
+                                                                                       class="classTitle"><span
+                                                                                            _ngcontent-ygs-c30=""
+                                                                                            class="text">{{ classes.description }}</span>
+                                                                                    </p>
+                                                                                    <p _ngcontent-ygs-c30=""
+                                                                                       class="date">
+                                                                                        Days: {{ classes.total_days }}
+                                                                                        <span
+                                                                                                _ngcontent-ygs-c30=""></span>
+                                                                                    </p>
+                                                                                    <p _ngcontent-ygs-c30=""
+                                                                                       class="date">
+                                                                                        Session
+                                                                                        Duration: {{ classes.time_slot }}
+                                                                                        minute <span
+                                                                                            _ngcontent-ygs-c30=""
+                                                                                            style="
+    display: inline-block;
+">(per session)</span>
+                                                                                    </p>
+                                                                                    <h3 _ngcontent-ygs-c30=""
+                                                                                        class="price">
+                                                                                        Fee : ${{ classes.price }}
+                                                                                        <span _ngcontent-ygs-c30="">(Complete Course )</span>
+                                                                                    </h3><a _ngcontent-ygs-c30=""
+                                                                                            data-toggle="modal"
+                                                                                            data-target="#appointment-popup"
+                                                                                            data={{ classes.id }}
+                                                                                                    class="btn-custom"
+                                                                                            onclick="classes(this)">BOOK
+                                                                                        A
+                                                                                        CLASS</a></div>
+                                                                                <script>function classes(event) {
+                                                                                    localStorage.setItem('class_instructor_id', event.getAttribute('data'))
+
+
+                                                                                }</script>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    {% endfor %}
+                                                                {% else %}
+
+                                                                {% endif %}
+
+                                                                <!----></div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div _ngcontent-ygs-c30="" id="about" class="tab-pane fade">
+                                                    <div _ngcontent-ygs-c30="" class="container-fluid">
+                                                        <div _ngcontent-ygs-c30="" class="about-section">
+                                                            <div _ngcontent-ygs-c30="" class="row">
+                                                                <div _ngcontent-ygs-c30=""
+                                                                     class="col-md-6 col-sm-12 imageProfile">
+
+                                                                    {% if first_name.profile_img %}
+                                                                        <div _ngcontent-ygs-c30=""><img
+                                                                                _ngcontent-ygs-c30="" alt=""
+                                                                                class="imageIcon"
+                                                                                src="{{ first_name.profile_img }}">
+                                                                        </div>
+                                                                    {% else %}
+                                                                        <div _ngcontent-ygs-c30=""><img
+                                                                                _ngcontent-ygs-c30="" alt=""
+                                                                                class="imageIcon"
+                                                                                src="Images/profile/default.png">
+                                                                        </div>
+                                                                    {% endif %}
+
+                                                                </div><!---->
+                                                                <div _ngcontent-ygs-c30=""
+                                                                     class="col-md-6 col-sm-12 profileContent"><h3
+                                                                        _ngcontent-ygs-c30=""
+                                                                        style="text-transform: capitalize;">{{ first_name.first_name }} {{ first_name.last_name }}</h3>
+                                                                    <p _ngcontent-ygs-c30=""><i
+                                                                            _ngcontent-ygs-c30=""
+                                                                            class="fa fa-map-marker"></i> {{ first_name.address }}
+                                                                    </p>
+                                                                    <!---->
+                                                                    {% for i in profile_detail %}
+                                                                        <p _ngcontent-ygs-c30=""
+                                                                           class="">{{ i.about }}</p><!---->
+
+
+                                                                        <ul _ngcontent-ygs-c30="">
+                                                                            <li _ngcontent-ygs-c30=""><a
+                                                                                    _ngcontent-ygs-c30=""
+                                                                                    target="_blank"
+                                                                                    {% if i.facebook_link is not None %}
+                                                                                    href="{{ i.facebook_link }}">
+                                                                                    {% else %}
+                                                                                        href="https://www.facebook.com/">
+                                                                                    {% endif %}
+                                                                            <i class="fab fa-facebook-square"
+                                                                               style="font-size:30px;margin-left:-2px; "></i></a>
+                                                                            </li>
+                                                                            <!---->
+                                                                            <li _ngcontent-ygs-c30=""><a
+                                                                                    _ngcontent-ygs-c30=""
+                                                                                    target="_blank"
+                                                                                    {% if i.instagram_link is not None %}
+                                                                                    href="{{ i.instagram_link }}">
+                                                                                    {% else %}
+                                                                                        href="https://www.instagram.com/">
+                                                                                    {% endif %}
+                                                                            <i class="fab fa-instagram"
+                                                                               style="font-size:30px;margin-left:-2px;"></i></a>
+                                                                            </li><!---->
+                                                                            <li _ngcontent-ygs-c30=""><a
+                                                                                    _ngcontent-ygs-c30=""
+                                                                                    target="_blank"
+                                                                                    {% if i.twitter_link is not None %}
+                                                                                    href="{{ i.twitter_link }}">
+                                                                                    {% else %}
+                                                                                        href="https://twitter.com/i/flow/login?input_flow_data=%7B%22requested_variant%22%3A%22eyJsYW5nIjoiZW4ifQ%3D%3D%22%7D">
+                                                                                    {% endif %}
+                                                                            <i class="fab fa-twitter-square"
+                                                                               style="font-size:30px;margin-left:-2px;"></i></a>
+                                                                            </li>
+                                                                        <li _ngcontent-ygs-c30=""><a
+                                                                                    _ngcontent-ygs-c30=""
+                                                                                    target="_blank"
+                                                                                    {% if i.website_link is not None %}
+                                                                                    href="{{ i.website_link }}">
+                                                                                    {% else %}
+                                                                                        href="https://swimtimesolutions.com/">
+                                                                                    {% endif %}
+                                                                            <i i class="fas fa-link"
+   style="font-size:25px;margin-left:-2px;"></i></a>
+                                                                            </li>
+                                                                            <!----></ul>
+                                                                    {% endfor %}
+
+                                                                </div>
+                                                            </div><!----></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ngx-spinner _ngcontent-ygs-c30="" bdcolor="rgba(50, 50, 50, 0.8)" size="large"
+                                             type="ball-spin-clockwise" _nghost-ygs-c29=""><!----></ngx-spinner>
+                            </div>
+                        </div>
+                        <div _ngcontent-ygs-c30="" id="appointment-popup" tabindex="-1" role="dialog"
+                             aria-labelledby="myLargeModalLabel" data-backdrop="static" data-keyboard="false"
+                             aria-hidden="true" class="modal fade login login-pop appointment">
+                            <div _ngcontent-ygs-c30="" class="modal-dialog modal-lg">
+                                <fieldset _ngcontent-ygs-c30="" id="calendar_popup"
+                                          class="first-step first-fieldset-section">
+                                    <div _ngcontent-ygs-c30="" class="modal-content">
+                                        <div _ngcontent-ygs-c30="" class="modal-header registration-form">
+                                            <button _ngcontent-ygs-c30="" type="button"
+                                                    onclick="window.location.reload()" data-dismiss="modal"
+                                                    aria-hidden="true" class="close btn-first"> ×
+                                            </button>
+                                            <h4 _ngcontent-ygs-c30="">DATE / SCHEDULE</h4>
+                                            <p _ngcontent-ygs-c30="">When you want to get an appointment?</p></div>
+                                        <div _ngcontent-ygs-c30="" class="modal-body">
+                                            <div _ngcontent-ygs-c30="" class="assessment-container">
+                                                <div _ngcontent-ygs-c30="" class="row">
+                                                    <div _ngcontent-ygs-c30="" class="col-md-12 form-box">
+                                                        <form _ngcontent-ygs-c30="" novalidate="" role="form"
+                                                              action="javascript:void(0);"
+                                                              class="ng-untouched ng-pristine ng-valid">
+                                                            <ul _ngcontent-ygs-c30="" class="nav nav-tabs">
+                                                                <li _ngcontent-ygs-c30="" class="active"><a
+                                                                        _ngcontent-ygs-c30="" data-toggle="tab"
+                                                                        href="#menu1" onclick="menu1buttonhide()">SELECT
+                                                                    COMPLETE COURSE</a>
+                                                                </li>
+                                                                <li _ngcontent-ygs-c30=""><a _ngcontent-ygs-c30=""
+                                                                                             data-toggle="tab"
+                                                                                             href="#menu2"
+                                                                                             onclick="menu2buttonhide()">MAKE
+                                                                    INDIVIDUAL SELECTION</a></li>
+                                                            </ul>
+                                                            <div _ngcontent-ygs-c30="" class="tab-content">
+                                                                <div _ngcontent-ygs-c30="" id="menu1"
+                                                                     class="tab-pane fade in active">
+                                                                    <div _ngcontent-ygs-c30="" class="row">
+                                                                        <div _ngcontent-ygs-c30=""
+                                                                             class="col-md-6 left"><h3
+                                                                                _ngcontent-ygs-c30="" class="date">
+                                                                            <a _ngcontent-ygs-c30=""
+                                                                               href="javascript:void(0);"
+                                                                               id="clearDates"
+                                                                               class="reset-btn"><span
+                                                                                    _ngcontent-ygs-c30="">x</span>Clear
+                                                                                Date</a> Select Start Date </h3>
+                                                                            <div _ngcontent-ygs-c30=""
+                                                                                 class="mbsc-grid">
+                                                                                <div
+                                                                                        id="calendar2"
+                                                                                        class="calendar">
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <form _ngcontent-ygs-c30="" novalidate=""
+                                                                              class="ng-untouched ng-pristine ng-valid">
+                                                                            <div _ngcontent-ygs-c30=""
+                                                                                 class="col-md-6 right">
+                                                                                <div _ngcontent-ygs-c30=""
+                                                                                     class="time check-list"><h3
+                                                                                        _ngcontent-ygs-c30="">Select
+                                                                                    Time</h3><!---->
+                                                                                    <div _ngcontent-ygs-c30=""
+                                                                                         id="singleDate"></div>
+                                                                                    <div class="block list">
+                                                                                        <div class="check-box-list">
+                                                                                            <div class="col-md-12">
+                                                                                                <div class="div-block timeSelectContent" id="timeSelectContent">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </form>
+                                                                        <br><br>
+                                                                        <!---->
+                                                                    </div>
+                                                                    <br>
+
+                                                                    {% if active_kid|length > 1 %}
+                                                                        <select style="width: 50% !important; "
+                                                                                class="form-control "
+                                                                                aria-label="Default select example"
+                                                                                id="kids">
+                                                                            <option selected disabled id="options"
+                                                                                    value="0" required="">Please Select
+                                                                                Student Name
+                                                                            </option>  {% for kids in active_kid %}
+                                                                            <option value="{{ kids.id }}">{{ kids.kids_name }}</option> {% endfor %}
+                                                                        </select>
+                                                                    {% else %}
+                                                                        <select style="width: 50% !important; display: none !important; "
+                                                                                class="form-control "
+                                                                                aria-label="Default select example"
+                                                                                id="kids">
+                                                                            {% for kids in active_kid %}
+                                                                                <option value="{{ kids.id }}">{{ kids.kids_name }}</option> {% endfor %}
+                                                                        </select>
+                                                                    {% endif %}
+                                                                    <br>
+                                                                    <div
+                                                                            class="termsconditions">
+                                                                        <div
+                                                                                class="">
+                                                                            <input
+                                                                                    _ngcontent-dbn-c30=""
+                                                                                    type="checkbox"
+                                                                                    id="checkbox_select"
+                                                                                    value="0"
+                                                                                    name="terms"
+                                                                                    required></div>
+
+                                                                        <label _ngcontent-dbn-c30=""
+                                                                               for="terms"
+                                                                               style="margin-top:-20px;margin-left:20px;"
+                                                                               class="termsconditions"> Check
+                                                                            here to
+                                                                            indicate that you have read and
+                                                                            agree to the terms &amp; condition
+                                                                            of the <span _ngcontent-dbn-c30="">Swim Time Solutions </span>
+                                                                            Agreement. </label>
+                                                                    </div>
+                                                                    <div _ngcontent-ygs-c30="" class="row">
+                                                                        <div _ngcontent-ygs-c30=""
+                                                                             class="next-btn-div registration-form col-md-6"
+                                                                             style="text-align: center;">
+                                                                            <button _ngcontent-ygs-c30=""
+                                                                                    type="button"
+                                                                                    class="close btn exit"
+                                                                                    onclick="check()">Check
+                                                                                Availability
+                                                                            </button>
+                                                                        </div><!----></div>
+                                                                </div>
+
+                                                                <div _ngcontent-ygs-c30="" id="menu2" onclick=""
+                                                                     class="tab-pane fade">
+                                                                    <div _ngcontent-ygs-c30="" class="row">
+                                                                        <div _ngcontent-ygs-c30=""
+                                                                             class="col-md-6 left">
+                                                                            <div _ngcontent-ygs-c30=""
+                                                                                 class="individual"><h3
+                                                                                    _ngcontent-ygs-c30=""
+                                                                                    class="date">Select Multiple
+                                                                                Date</h3><!---->
+                                                                                <div _ngcontent-ygs-c30=""
+                                                                                     class="mbsc-grid">
+                                                                                    <div _ngcontent-ygs-c30=""
+                                                                                         id="calendar"
+                                                                                         class="calendar">
+
+                                                                                    </div>
+                                                                                    <div _ngcontent-ygs-c30=""
+                                                                                         class="check-left"></div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <form _ngcontent-ygs-c30="" novalidate=""
+                                                                              class="ng-untouched ng-pristine ng-valid">
+                                                                            <div _ngcontent-ygs-c30=""
+                                                                                 class="col-md-6 right">
+                                                                                <div _ngcontent-ygs-c30=""
+                                                                                     class="time check-list"><h3
+                                                                                        _ngcontent-ygs-c30="">Select
+                                                                                    Time</h3><!---->
+                                                                                    <div class="panel-group"
+                                                                                         id="accordion" role="tablist"
+                                                                                         aria-multiselectable="true"></div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                    <br>
+                                                                    {% if active_kid|length > 1 %}
+                                                                        <select style="width: 50% !important; "
+                                                                                class="form-control "
+                                                                                aria-label="Default select example"
+                                                                                id="kids1">
+                                                                            <option selected disabled id="options"
+                                                                                    value="0" required="">Please Select
+                                                                                Student Name
+                                                                            </option>  {% for kids in active_kid %}
+                                                                            <option value="{{ kids.id }}">{{ kids.kids_name }}</option> {% endfor %}
+                                                                        </select>
+                                                                    {% else %}
+                                                                        <select style="width: 50% !important; display: none !important; "
+                                                                                class="form-control "
+                                                                                aria-label="Default select example"
+                                                                                id="kids1">
+                                                                            {% for kids in active_kid %}
+                                                                                <option value="{{ kids.id }}">{{ kids.kids_name }}</option> {% endfor %}
+                                                                        </select>
+                                                                    {% endif %}
+                                                                    <br>
+                                                                    <div class="termsconditions">
+                                                                        <div class="">
+                                                                            <input _ngcontent-dbn-c30=""
+                                                                                   type="checkbox"
+                                                                                   id="checkbox_select1"
+                                                                                   value="0"
+                                                                                   name="terms"
+                                                                                   required></div>
+
+                                                                        <label _ngcontent-dbn-c30=""
+                                                                               for="terms"
+                                                                               style="margin-top:-20px;margin-left:20px;"
+                                                                               class="termsconditions"> Check
+                                                                            here to
+                                                                            indicate that you have read and
+                                                                            agree to the terms &amp; condition
+                                                                            of the <span _ngcontent-dbn-c30="">Swim Time Solutions </span>
+                                                                            Agreement. </label>
+                                                                    </div>
+                                                                    <div _ngcontent-ygs-c30="" class="row">
+                                                                        <div _ngcontent-ygs-c30=""
+                                                                             class="next-btn-div registration-form col-md-12"
+                                                                             style="text-align: center;">
+                                                                            <button _ngcontent-ygs-c30="" type="button"
+                                                                                    onclick="check_individual()">
+                                                                                Check Availability
+                                                                            </button>
+                                                                        </div>
+                                                                        <div _ngcontent-ygs-c30=""
+                                                                             class="col-md-3"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                <input type="button" value="Next"
+                                                                       class="btn btn-primary"
+                                                                       id="nextbtn"
+                                                                       style="background-color:#0A66C2;float: right">
+                                                                <input type="button" value="Next"
+                                                                       class="btn btn-primary"
+                                                                       onsubmit="return Validate()"
+                                                                       id="nextbtn1"
+                                                                       style="background-color:#0A66C2;float: right">
+                                                            </div>
+                                                        </form>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </fieldset>
+
+                                <div _ngcontent-ygs-c30="" id="individual_date_time" style="display: none;">
+                                    <div _ngcontent-ygs-c30="" class="modal-content">
+                                        <div _ngcontent-ygs-c30="" class="modal-header registration-form">
+                                            <button _ngcontent-ygs-c30="" type="button"
+                                                    onclick="window.location.reload()" data-dismiss="modal"
+                                                    aria-hidden="true" class="close btn-first exit"> ×
+                                            </button>
+                                        </div>
+                                        <div _ngcontent-ygs-c30="" class="modal-body select-time"><h4
+                                                _ngcontent-ygs-c30="">Select Time</h4>
+                                            <div _ngcontent-ygs-c30="" class="assessment-container">
+                                                <div _ngcontent-ygs-c30="" class="form-bottom">
+                                                    <div _ngcontent-ygs-c30="" class="div-block"
+                                                         style="min-height: 50vh;">
+                                                        <div _ngcontent-ygs-c30="" class="row">
+                                                            <div _ngcontent-ygs-c30="" class="col-md-4">
+                                                                <div _ngcontent-ygs-c30="" class="dropdown"><label
+                                                                        _ngcontent-ygs-c30="">2021-02-26</label><select
+                                                                        _ngcontent-ygs-c30=""
+                                                                        class="btn btn-primary dropdownSelect ng-untouched ng-pristine ng-valid">
+                                                                    <option _ngcontent-ygs-c30="" disabled="">Select
+                                                                        Time
+                                                                    </option><!----></select></div><!----></div>
+                                                            <!----></div><!----></div>
+                                                    <div _ngcontent-ygs-c30="" class="row termCondition">
+                                                        <div _ngcontent-ygs-c30="" class="col-md-1"
+                                                             style="text-align: right;"><input _ngcontent-ygs-c30=""
+                                                                                               type="checkbox"
+                                                                                               id="termsCondition"
+                                                                                               name="terms"
+                                                                                               value="1"></div>
+                                                        <div _ngcontent-ygs-c30="" class="col-md-10 labelContent">
+                                                            <label _ngcontent-ygs-c30="" for="termsCondition"> Check
+                                                                here to indicate that you have read and agree to the
+                                                                terms &amp; condition of the <span
+                                                                        _ngcontent-ygs-c30="">Swim Time Solutions </span>
+                                                                Agreement. </label></div>
+                                                    </div><!----></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div _ngcontent-ygs-c30="" id="booking_confirm" class="confirm-section"
+                                     style="display: none;">
+                                    <div _ngcontent-ygs-c30="" class="modal-content">
+                                        <div _ngcontent-ygs-c30="" class="modal-header registration-form">
+                                            <button _ngcontent-ygs-c30="" type="button" data-dismiss="modal"
+                                                    onclick="window.location.reload()"
+                                                    aria-hidden="true" class="close btn-first"> ×
+                                            </button>
+                                        </div>
+                                        <div _ngcontent-ygs-c30="" class="modal-body confirm-pay"><h4
+                                                _ngcontent-ygs-c30="">Pay To Confirm</h4>
+                                            <div _ngcontent-ygs-c30="" class="assessment-container">
+                                                <div _ngcontent-ygs-c30="" class="form-bottom">
+                                                    <div _ngcontent-ygs-c30="" class="confirm-block">
+                                                        <div _ngcontent-ygs-c30="" class="row">
+                                                            <div _ngcontent-ygs-c30=""
+                                                                 class="col-md-8 col-md-offset-2">
+                                                                <div _ngcontent-ygs-c30=""
+                                                                     class="confirm-block-div">
+                                                                    <div _ngcontent-ygs-c30="" class="row">
+                                                                        <div _ngcontent-ygs-c30=""
+                                                                             class="col-md-12">
+                                                                            <div _ngcontent-ygs-c30=""
+                                                                                 class="row confirm-block-inner">
+                                                                                <div _ngcontent-ygs-c30=""
+                                                                                     class="col-md-4 right-text left-text-left">
+                                                                                    <label _ngcontent-ygs-c30="">
+                                                                                        Instructor Name: </label>
+                                                                                </div>
+                                                                                <div _ngcontent-ygs-c30=""
+                                                                                     class="col-md-8 left-text">
+                                                                                    <!----></div><!----></div>
+                                                                        </div>
+                                                                        <div _ngcontent-ygs-c30="" class="col-md-8">
+                                                                            <div _ngcontent-ygs-c30=""
+                                                                                 class="row confirm-block-inner">
+                                                                                <div _ngcontent-ygs-c30=""
+                                                                                     class="col-md-6 right-text">
+                                                                                    <label _ngcontent-ygs-c30="">
+                                                                                        Course Duration: </label>
+                                                                                </div>
+                                                                                <div _ngcontent-ygs-c30=""
+                                                                                     class="col-md-6 left-text">
+                                                                                    <!----></div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div _ngcontent-ygs-c30="" class="col-md-4">
+                                                                            <div _ngcontent-ygs-c30=""
+                                                                                 class="row confirm-block-inner">
+                                                                                <div _ngcontent-ygs-c30=""
+                                                                                     class="col-md-6 right-text">
+                                                                                    <label _ngcontent-ygs-c30="">
+                                                                                        Fee: </label></div>
+                                                                                <div _ngcontent-ygs-c30=""
+                                                                                     class="col-md-6 left-text"><p
+                                                                                        _ngcontent-ygs-c30="">$ </p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div _ngcontent-ygs-c30="" class="row">
+                                                                    <div _ngcontent-ygs-c30="" class="col-md-12">
+                                                                        <div _ngcontent-ygs-c30=""
+                                                                             class="confirm-table">
+                                                                            <table _ngcontent-ygs-c30=""
+                                                                                   class="table">
+                                                                                <thead _ngcontent-ygs-c30="">
+                                                                                <tr _ngcontent-ygs-c30="">
+                                                                                    <th _ngcontent-ygs-c30="">Date
+                                                                                    </th>
+                                                                                    <th _ngcontent-ygs-c30="">Time
+                                                                                    </th>
+                                                                                </tr>
+                                                                                </thead>
+                                                                            </table>
+                                                                            <div _ngcontent-ygs-c30=""
+                                                                                 class="table2">
+                                                                                <table _ngcontent-ygs-c30="">
+                                                                                    <tr _ngcontent-ygs-c30="">
+                                                                                        <td _ngcontent-ygs-c30="">
+                                                                                            2021-02-09
+                                                                                        </td>
+                                                                                        <td _ngcontent-ygs-c30="">
+                                                                                            -
+                                                                                        </td>
+                                                                                    </tr><!---->
+                                                                                    <tbody _ngcontent-ygs-c30="">
+                                                                                    <!----></tbody><!----></table>
+                                                                                <!----></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div _ngcontent-ygs-c30=""
+                                                         class="next-btn-div registration-form">
+                                                        <button _ngcontent-ygs-c30="" type="button">Pay</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div _ngcontent-ygs-c30="" id="paymentConfirm_data" style="display: none;">
+                                    <div _ngcontent-ygs-c30="" class="modal-content">
+                                        <div _ngcontent-ygs-c30="" class="modal-body">
+                                            <div _ngcontent-ygs-c30="" class="assessment-container">
+                                                <div _ngcontent-ygs-c30="" class="form-bottom">
+                                                    <div _ngcontent-ygs-c30="" class="confirm-block">
+                                                        <div _ngcontent-ygs-c30="" class="modal-body">
+                                                            <div _ngcontent-ygs-c30="" class="assessment-container">
+                                                                <div _ngcontent-ygs-c30="" class="form-bottom">
+                                                                    <div _ngcontent-ygs-c30=""
+                                                                         class="confirm-block">
+                                                                        <div _ngcontent-ygs-c30=""
+                                                                             class="last-step"><img
+                                                                                _ngcontent-ygs-c30=""
+                                                                                src="assets/img/last-step.png"
+                                                                                alt="image">
+                                                                            <h3 _ngcontent-ygs-c30="">PAYMENT DONE
+                                                                                SUCCESSFULLY</h3>
+                                                                            <p _ngcontent-ygs-c30="">Your booking is
+                                                                                confirmed. </p><a
+                                                                                    _ngcontent-ygs-c30=""
+                                                                                    data-dismiss="modal"
+                                                                                    onclick="window.location.reload()">DONE</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div _ngcontent-ygs-c30=""
+                                                             class="row paymentSuccessContainer">
+                                                            <div _ngcontent-ygs-c30="" class="col-md-12">
+                                                                <div _ngcontent-ygs-c30="" class="row dataContent">
+                                                                    <div _ngcontent-ygs-c30="" class="col-md-4">
+                                                                        <label _ngcontent-ygs-c30=""> Transaction
+                                                                            ID: </label></div><!---->
+                                                                    <div _ngcontent-ygs-c30="" class="col-md-8">
+                                                                        <!----></div>
+                                                                </div>
+                                                                <div _ngcontent-ygs-c30="" class="row dataContent">
+                                                                    <div _ngcontent-ygs-c30="" class="col-md-4">
+                                                                        <label _ngcontent-ygs-c30=""> Instructor
+                                                                            Name: </label></div><!---->
+                                                                    <div _ngcontent-ygs-c30="" class="col-md-8">
+                                                                        <!----></div>
+                                                                </div>
+                                                                <div _ngcontent-ygs-c30="" class="row dataContent">
+                                                                    <div _ngcontent-ygs-c30="" class="col-md-4">
+                                                                        <label _ngcontent-ygs-c30=""> Course
+                                                                            Duration: </label><!----></div><!---->
+                                                                    <div _ngcontent-ygs-c30="" class="col-md-4">
+                                                                        <label _ngcontent-ygs-c30=""></label></div>
+                                                                    <div _ngcontent-ygs-c30="" class="col-md-4">
+                                                                        <label _ngcontent-ygs-c30=""> Time
+                                                                            Duration: </label><!----></div><!---->
+                                                                </div>
+                                                                <div _ngcontent-ygs-c30="" class="row dataContent">
+                                                                    <div _ngcontent-ygs-c30="" class="col-md-4">
+                                                                        <label _ngcontent-ygs-c30=""> Total
+                                                                            Amount: </label><!----></div><!---->
+                                                                    <div _ngcontent-ygs-c30="" class="col-md-4">
+                                                                        <label _ngcontent-ygs-c30=""> Paid
+                                                                            Amount: </label><!----></div><!---->
+                                                                    <div _ngcontent-ygs-c30="" class="col-md-4">
+                                                                        <label _ngcontent-ygs-c30=""> Due
+                                                                            Amount: </label><!----></div><!---->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </app-dashboard>
+
+    <div _ngcontent-ygs-c30="" id="appointment-popup" tabindex="-1" role="dialog"
+         aria-labelledby="myLargeModalLabel" data-backdrop="static" data-keyboard="false"
+         aria-hidden="true" class="modal fade login login-pop appointment">
+        <div _ngcontent-ygs-c30="" class="modal-dialog modal-lg">
+            <fieldset _ngcontent-ygs-c30="" id="calendar_popup"
+                      class="first-step first-fieldset-section">
+                <div _ngcontent-ygs-c30="" class="modal-content">
+                    <div _ngcontent-ygs-c30="" class="modal-header registration-form">
+                        <button _ngcontent-ygs-c30="" type="button"
+                                onclick="window.location.reload()" data-dismiss="modal"
+                                onclick="window.location.reload()"
+                                aria-hidden="true" class="close btn-first"> ×
+                        </button>
+                        <h4 _ngcontent-ygs-c30="">DATE / SCHEDULE</h4>
+                        <p _ngcontent-ygs-c30="">When you want to get an appointment?</p></div>
+                    <div _ngcontent-ygs-c30="" class="modal-body">
+                        <div _ngcontent-ygs-c30="" class="assessment-container">
+                            <div _ngcontent-ygs-c30="" class="row">
+                                <div _ngcontent-ygs-c30="" class="col-md-12 form-box">
+                                    <form _ngcontent-ygs-c30="" novalidate="" role="form"
+                                          action="javascript:void(0);"
+                                          class="ng-untouched ng-pristine ng-valid">
+                                        <ul _ngcontent-ygs-c30="" class="nav nav-tabs">
+                                            <li _ngcontent-ygs-c30="" class="active"><a
+                                                    _ngcontent-ygs-c30="" data-toggle="tab"
+                                                    href="#menu1" onclick="menu1buttonhide()">SELECT COMPLETE COURSE</a>
+                                            </li>
+                                            <li _ngcontent-ygs-c30=""><a _ngcontent-ygs-c30=""
+                                                                         data-toggle="tab"
+                                                                         href="#menu2">MAKE
+                                                INDIVIDUAL SELECTION</a></li>
+                                        </ul>
+                                        <div _ngcontent-ygs-c30="" class="tab-content">
+                                            <div _ngcontent-ygs-c30="" id="menu1"
+                                                 class="tab-pane fade in active">
+                                                <div _ngcontent-ygs-c30="" class="row">
+                                                    <div _ngcontent-ygs-c30=""
+                                                         class="col-md-6 left"><h3
+                                                            _ngcontent-ygs-c30="" class="date">
+                                                        <a _ngcontent-ygs-c30=""
+                                                           href="javascript:void(0);"
+                                                           id="clearDates"
+                                                           class="reset-btn"><span
+                                                                _ngcontent-ygs-c30="">x</span>Clear
+                                                            Date</a> Select Start Date </h3>
+                                                        <div _ngcontent-ygs-c30=""
+                                                             class="mbsc-grid">
+                                                            <div
+                                                                    id="calendar2"
+                                                                    class="calendar">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <form _ngcontent-ygs-c30="" novalidate=""
+                                                          class="ng-untouched ng-pristine ng-valid">
+                                                        <div _ngcontent-ygs-c30=""
+                                                             class="col-md-6 right">
+                                                            <div _ngcontent-ygs-c30=""
+                                                                 class="time check-list"><h3
+                                                                    _ngcontent-ygs-c30="">Select
+                                                                Time</h3><!---->
+                                                                <div _ngcontent-ygs-c30=""
+                                                                     id="singleDate"></div>
+                                                                <div class="block list">
+                                                                    <div class="check-box-list">
+                                                                        <div class="col-md-12">
+                                                                            <div class="div-block timeSelectContent">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!----></form>
+                                                    <div
+                                                            class="termsconditions">
+                                                        <div _ngcontent-dbn-c30=""
+                                                             class="col-md-1"
+                                                        ><input
+                                                                _ngcontent-dbn-c30=""
+                                                                type="checkbox" value="0" id="checkbox_select"
+                                                                id="terms"
+                                                                required></div>
+
+                                                        <label _ngcontent-dbn-c30=""
+                                                               for="terms"
+                                                               class="termsconditions"> Check
+                                                            here to
+                                                            indicate that you have read and
+                                                            agree to the terms &amp; condition
+                                                            of the <span
+                                                                    _ngcontent-dbn-c30="">Swim Time Solutions </span>
+                                                            Agreement. </label>
+                                                    </div>
+                                                </div>
+                                                <div _ngcontent-ygs-c30="" class="row">
+                                                    <div _ngcontent-ygs-c30=""
+                                                         class="next-btn-div registration-form col-md-6"
+                                                         style="text-align: center;">
+                                                        <button _ngcontent-ygs-c30=""
+                                                                type="button"
+                                                                class="close btn exit"
+                                                                onclick="check()">Check
+                                                            Availability
+                                                        </button>
+                                                    </div><!----></div>
+                                            </div>
+
+                                            <div _ngcontent-ygs-c30="" id="menu2"
+                                                 class="tab-pane fade">
+                                                <div _ngcontent-ygs-c30="" class="row">
+                                                    <div _ngcontent-ygs-c30=""
+                                                         class="col-md-12 left">
+                                                        <div _ngcontent-ygs-c30=""
+                                                             class="individual"><h3
+                                                                _ngcontent-ygs-c30=""
+                                                                class="date">Select Multiple
+                                                            Date</h3><!---->
+                                                            <div _ngcontent-ygs-c30=""
+                                                                 class="mbsc-grid">
+                                                                <div _ngcontent-ygs-c30=""
+                                                                     id="calendar"
+                                                                     class="calendar">
+                                                                </div>
+                                                                <div _ngcontent-ygs-c30=""
+                                                                     class="check-left"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div _ngcontent-ygs-c30="" class="row">
+                                                    <div _ngcontent-ygs-c30=""
+                                                         class="next-btn-div registration-form col-md-12"
+                                                         style="text-align: center;">
+                                                        <button _ngcontent-ygs-c30="" type="button"
+                                                                onclick="check_individual()">
+                                                            Check Availability
+                                                        </button>
+                                                    </div>
+                                                    <div _ngcontent-ygs-c30=""
+                                                         class="col-md-3"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <input type="button" value="Next"
+                                                   class="btn btn-primary"
+                                                   id="nextbtn"
+                                                   style="background-color:#0A66C2;float: right">
+                                            <input type="button" value="Next"
+                                                   class="btn btn-primary"
+                                                   id="nextbtn1"
+                                                   style="background-color:#0A66C2;float: right">
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </fieldset>
+
+            <div _ngcontent-ygs-c30="" id="individual_date_time" style="display: none;">
+                <div _ngcontent-ygs-c30="" class="modal-content">
+                    <div _ngcontent-ygs-c30="" class="modal-header registration-form">
+                        <button _ngcontent-ygs-c30="" type="button"
+                                onclick="window.location.reload()" data-dismiss="modal"
+                                aria-hidden="true" class="close btn-first exit"> ×
+                        </button>
+                    </div>
+                    <div _ngcontent-ygs-c30="" class="modal-body select-time"><h4
+                            _ngcontent-ygs-c30="">Select Time</h4>
+                        <div _ngcontent-ygs-c30="" class="assessment-container">
+                            <div _ngcontent-ygs-c30="" class="form-bottom">
+                                <div _ngcontent-ygs-c30="" class="div-block"
+                                     style="min-height: 50vh;">
+                                    <div _ngcontent-ygs-c30="" class="row">
+                                        <div _ngcontent-ygs-c30="" class="col-md-4">
+                                            <div _ngcontent-ygs-c30="" class="dropdown"><label
+                                                    _ngcontent-ygs-c30="">2021-02-26</label><select
+                                                    _ngcontent-ygs-c30=""
+                                                    class="btn btn-primary dropdownSelect ng-untouched ng-pristine ng-valid">
+                                                <option _ngcontent-ygs-c30="" disabled="">Select
+                                                    Time
+                                                </option><!----></select></div><!----></div>
+                                        <!----></div><!----></div>
+                                <div _ngcontent-ygs-c30="" class="row termCondition">
+                                    <div _ngcontent-ygs-c30="" class="col-md-1"
+                                         style="text-align: right;"><input _ngcontent-ygs-c30=""
+                                                                           type="checkbox"
+                                                                           id="termsCondition"
+                                                                           name="terms"
+                                                                           value="1"></div>
+                                    <div _ngcontent-ygs-c30="" class="col-md-10 labelContent">
+                                        <label _ngcontent-ygs-c30="" for="termsCondition"> Check
+                                            here to indicate that you have read and agree to the
+                                            terms &amp; condition of the <span
+                                                    _ngcontent-ygs-c30="">Swim Time Solutions </span>
+                                            Agreement. </label></div>
+                                </div><!----></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div _ngcontent-ygs-c30="" id="booking_confirm" class="confirm-section"
+                 style="display: none;">
+                <div _ngcontent-ygs-c30="" class="modal-content">
+                    <div _ngcontent-ygs-c30="" class="modal-header registration-form">
+                        <button _ngcontent-ygs-c30="" type="button" data-dismiss="modal"
+                                onclick="window.location.reload()"
+                                aria-hidden="true" class="close btn-first"> ×
+                        </button>
+                    </div>
+                    <div _ngcontent-ygs-c30="" class="modal-body confirm-pay"><h4
+                            _ngcontent-ygs-c30="">Pay To Confirm</h4>
+                        <div _ngcontent-ygs-c30="" class="assessment-container">
+                            <div _ngcontent-ygs-c30="" class="form-bottom">
+                                <div _ngcontent-ygs-c30="" class="confirm-block">
+                                    <div _ngcontent-ygs-c30="" class="row">
+                                        <div _ngcontent-ygs-c30=""
+                                             class="col-md-8 col-md-offset-2">
+                                            <div _ngcontent-ygs-c30=""
+                                                 class="confirm-block-div">
+                                                <div _ngcontent-ygs-c30="" class="row">
+                                                    <div _ngcontent-ygs-c30=""
+                                                         class="col-md-12">
+                                                        <div _ngcontent-ygs-c30=""
+                                                             class="row confirm-block-inner">
+                                                            <div _ngcontent-ygs-c30=""
+                                                                 class="col-md-4 right-text left-text-left">
+                                                                <label _ngcontent-ygs-c30="">
+                                                                    Instructor Name: </label>
+                                                            </div>
+                                                            <div _ngcontent-ygs-c30=""
+                                                                 class="col-md-8 left-text">
+                                                                <!----></div><!----></div>
+                                                    </div>
+                                                    <div _ngcontent-ygs-c30="" class="col-md-8">
+                                                        <div _ngcontent-ygs-c30=""
+                                                             class="row confirm-block-inner">
+                                                            <div _ngcontent-ygs-c30=""
+                                                                 class="col-md-6 right-text">
+                                                                <label _ngcontent-ygs-c30="">
+                                                                    Course Duration: </label>
+                                                            </div>
+                                                            <div _ngcontent-ygs-c30=""
+                                                                 class="col-md-6 left-text">
+                                                                <!----></div>
+                                                        </div>
+                                                    </div>
+                                                    <div _ngcontent-ygs-c30="" class="col-md-4">
+                                                        <div _ngcontent-ygs-c30=""
+                                                             class="row confirm-block-inner">
+                                                            <div _ngcontent-ygs-c30=""
+                                                                 class="col-md-6 right-text">
+                                                                <label _ngcontent-ygs-c30="">
+                                                                    Fee: </label></div>
+                                                            <div _ngcontent-ygs-c30=""
+                                                                 class="col-md-6 left-text"><p
+                                                                    _ngcontent-ygs-c30="">$ </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div _ngcontent-ygs-c30="" class="row">
+                                                <div _ngcontent-ygs-c30="" class="col-md-12">
+                                                    <div _ngcontent-ygs-c30=""
+                                                         class="confirm-table">
+                                                        <table _ngcontent-ygs-c30=""
+                                                               class="table">
+                                                            <thead _ngcontent-ygs-c30="">
+                                                            <tr _ngcontent-ygs-c30="">
+                                                                <th _ngcontent-ygs-c30="">Date
+                                                                </th>
+                                                                <th _ngcontent-ygs-c30="">Time
+                                                                </th>
+                                                            </tr>
+                                                            </thead>
+                                                        </table>
+                                                        <div _ngcontent-ygs-c30=""
+                                                             class="table2">
+                                                            <table _ngcontent-ygs-c30="">
+                                                                <tr _ngcontent-ygs-c30="">
+                                                                    <td _ngcontent-ygs-c30="">
+                                                                        2021-02-09
+                                                                    </td>
+                                                                    <td _ngcontent-ygs-c30="">
+                                                                        -
+                                                                    </td>
+                                                                </tr><!---->
+                                                                <tbody _ngcontent-ygs-c30="">
+                                                                <!----></tbody><!----></table>
+                                                            <!----></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div _ngcontent-ygs-c30=""
+                                     class="next-btn-div registration-form">
+                                    <button _ngcontent-ygs-c30="" type="button">Pay</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div _ngcontent-ygs-c30="" id="paymentConfirm_data" style="display: none;">
+                <div _ngcontent-ygs-c30="" class="modal-content">
+                    <div _ngcontent-ygs-c30="" class="modal-body">
+                        <div _ngcontent-ygs-c30="" class="assessment-container">
+                            <div _ngcontent-ygs-c30="" class="form-bottom">
+                                <div _ngcontent-ygs-c30="" class="confirm-block">
+                                    <div _ngcontent-ygs-c30="" class="modal-body">
+                                        <div _ngcontent-ygs-c30="" class="assessment-container">
+                                            <div _ngcontent-ygs-c30="" class="form-bottom">
+                                                <div _ngcontent-ygs-c30=""
+                                                     class="confirm-block">
+                                                    <div _ngcontent-ygs-c30=""
+                                                         class="last-step"><img
+                                                            _ngcontent-ygs-c30=""
+                                                            src="assets/img/last-step.png"
+                                                            alt="image">
+                                                        <h3 _ngcontent-ygs-c30="">PAYMENT DONE
+                                                            SUCCESSFULLY</h3>
+                                                        <p _ngcontent-ygs-c30="">Your booking is
+                                                            confirmed. </p><a
+                                                                _ngcontent-ygs-c30=""
+                                                                data-dismiss="modal"
+                                                                onclick="window.location.reload()">DONE</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div _ngcontent-ygs-c30=""
+                                         class="row paymentSuccessContainer">
+                                        <div _ngcontent-ygs-c30="" class="col-md-12">
+                                            <div _ngcontent-ygs-c30="" class="row dataContent">
+                                                <div _ngcontent-ygs-c30="" class="col-md-4">
+                                                    <label _ngcontent-ygs-c30=""> Transaction
+                                                        ID: </label></div><!---->
+                                                <div _ngcontent-ygs-c30="" class="col-md-8">
+                                                    <!----></div>
+                                            </div>
+                                            <div _ngcontent-ygs-c30="" class="row dataContent">
+                                                <div _ngcontent-ygs-c30="" class="col-md-4">
+                                                    <label _ngcontent-ygs-c30=""> Instructor
+                                                        Name: </label></div><!---->
+                                                <div _ngcontent-ygs-c30="" class="col-md-8">
+                                                    <!----></div>
+                                            </div>
+                                            <div _ngcontent-ygs-c30="" class="row dataContent">
+                                                <div _ngcontent-ygs-c30="" class="col-md-4">
+                                                    <label _ngcontent-ygs-c30=""> Course
+                                                        Duration: </label><!----></div><!---->
+                                                <div _ngcontent-ygs-c30="" class="col-md-4">
+                                                    <label _ngcontent-ygs-c30=""></label></div>
+                                                <div _ngcontent-ygs-c30="" class="col-md-4">
+                                                    <label _ngcontent-ygs-c30=""> Time
+                                                        Duration: </label><!----></div><!---->
+                                            </div>
+                                            <div _ngcontent-ygs-c30="" class="row dataContent">
+                                                <div _ngcontent-ygs-c30="" class="col-md-4">
+                                                    <label _ngcontent-ygs-c30=""> Total
+                                                        Amount: </label><!----></div><!---->
+                                                <div _ngcontent-ygs-c30="" class="col-md-4">
+                                                    <label _ngcontent-ygs-c30=""> Paid
+                                                        Amount: </label><!----></div><!---->
+                                                <div _ngcontent-ygs-c30="" class="col-md-4">
+                                                    <label _ngcontent-ygs-c30=""> Due
+                                                        Amount: </label><!----></div><!---->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div _ngcontent-ygs-c30="" id="details-popup" tabindex="-1" role="dialog"
+         aria-labelledby="myLargeModalLabel" data-backdrop="static" data-keyboard="false"
+         aria-hidden="true" class="modal fade login login-pop appointment">
+        <div _ngcontent-ygs-c30="" class="modal-dialog modal-lg">
+            <fieldset _ngcontent-ygs-c30="" id="calendar_popup"
+                      class="first-step first-fieldset-section">
+                <div _ngcontent-ygs-c30="" class="modal-content">
+                    <div _ngcontent-ygs-c30="" class="modal-header registration-form">
+                        <button _ngcontent-ygs-c30="" type="button"
+                                onclick="window.location.reload()" data-dismiss="modal"
+                                aria-hidden="true" class="close btn-first"> ×
+                        </button>
+                        <h4 _ngcontent-ygs-c30=""></h4>
+                        <p _ngcontent-ygs-c30=""></p></div>
+                    <div _ngcontent-asr-c30="" class="modal-body confirm-pay"><h4 _ngcontent-asr-c30="">Pay To Confirm
+                    </h4>
+                        <div _ngcontent-asr-c30="" class="assessment-container">
+                            <div _ngcontent-asr-c30="" class="form-bottom">
+                                <div _ngcontent-asr-c30="" class="confirm-block">
+                                    <div _ngcontent-asr-c30="" class="row">
+                                        <div _ngcontent-asr-c30="" class="col-md-8 col-md-offset-2">
+                                            <div _ngcontent-asr-c30="" class="confirm-block-div">
+                                                <div _ngcontent-asr-c30="" class="row">
+                                                    <div _ngcontent-asr-c30="" class="col-md-12">
+                                                        <div _ngcontent-asr-c30="" class="row confirm-block-inner">
+                                                            <div _ngcontent-asr-c30=""
+                                                                 class="col-md-4 right-text left-text-left"><label
+                                                                    _ngcontent-asr-c30=""> Instructor Name: </label>
+                                                            </div>
+                                                            <div _ngcontent-asr-c30="" class="col-md-8 left-text"><p
+                                                                    id="instructor_name"></p></div>
+
+                                                            <span style="display: none;"
+                                                                  id="booking_id_span"></span>
+                                                            <span style="display: none;"
+                                                                  class="" id="amount_to_be_paid"></span>
+
+                                                            <div _ngcontent-asr-c30="" class="col-md-8 left-text">
+                                                                <!----></div><!----></div>
+                                                    </div>
+                                                    <div _ngcontent-asr-c30="" class="col-md-12" style="">
+                                                        <div _ngcontent-asr-c30="" class="row confirm-block-inner">
+                                                            <div _ngcontent-asr-c30=""
+                                                                 class="col-md-4 right-text left-text-left"><label
+                                                                    _ngcontent-asr-c30=""> Student Name: </label>
+                                                            </div>
+                                                            <div _ngcontent-asr-c30="" class="col-md-8 left-text">
+                                                                <p id="kids_name1"></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div _ngcontent-asr-c30="" class="col-md-12"
+                                                         style="margin-bottom: 10px;">
+                                                        <div _ngcontent-asr-c30="" class="row confirm-block-inner">
+                                                            <div _ngcontent-asr-c30="" class="col-md-6 right-text">
+                                                                <label _ngcontent-asr-c30=""> Course
+                                                                    Duration: </label>
+                                                                <div style="margin-left: 140px;margin-top: -28px"><span
+                                                                        id="total_days"></span><span> Days</span></div>
+                                                            </div>
+                                                            <div _ngcontent-asr-c30="" class="col-md-6 left-text">
+                                                                <!----></div>
+                                                        </div>
+                                                    </div>
+                                                    <div _ngcontent-asr-c30="" class="col-md-12">
+                                                        <div _ngcontent-asr-c30="" class="row confirm-block-inner">
+                                                            <div _ngcontent-asr-c30="" class="col-md-6 right-text">
+                                                                <label _ngcontent-asr-c30=""> Course
+                                                                    Fee : </label>
+                                                                <div style="margin-left: 140px;margin-top: -28px"><span
+                                                                        id="fee">Days</span></div>
+                                                            </div>
+                                                            <div _ngcontent-asr-c30="" class="col-md-6 left-text">
+                                                                <!----></div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <form id="form_to_be" method="POST" action="stripe/cash-payment/">
+
+                                                <div>
+                                                    <input type="hidden" value="" id="bid" name="booking">
+
+                                                    <input type="hidden" value="1" id="payment_type1"
+                                                           name="payment_type">
+                                                    <input class="form-control"
+                                                           placeholder="Enter Amount To Be Paid"
+                                                           type="number" pattern="[0-9]"
+                                                           id="amount_to_be_paid1"
+                                                           name="paid_amount"
+
+
+                                                           required>
+                                                    <span style="color: red;" class="amount1" id="error_meesage"></span>
+
+
+                                            </form>
+                                            <br></div>
+                                        <div _ngcontent-asr-c30="" class="row">
+                                            <div _ngcontent-asr-c30="" class="col-md-12">
+                                                <div _ngcontent-asr-c30="" class="confirm-table">
+                                                    <table _ngcontent-asr-c30="" class="table">
+                                                        <thead _ngcontent-asr-c30="">
+                                                        <tr _ngcontent-asr-c30="">
+                                                            <th _ngcontent-asr-c30="">Date</th>
+                                                            <th _ngcontent-asr-c30="">Time</th>
+                                                        </tr>
+                                                        </thead>
+                                                    </table>
+                                                    <div _ngcontent-asr-c30="" class="table2">
+                                                        <table _ngcontent-asr-c30=""><!---->
+                                                            <tbody _ngcontent-asr-c30="" id="date_time_table">
+                                                            <!----></tbody><!----></table><!----></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div _ngcontent-asr-c30="" class="next-btn-div registration-form">
+
+                                {% for mode in profile_detail %}
+
+                                    
+                                        <button _ngcontent-asr-c30="" id="cash_payment_btn"
+                                                type="button">Cash Payment
+                                        </button>
+                                    
+
+                                    
+                                        <button _ngcontent-asr-c30="" id="procced_to_pay"
+                                                type="button">Card Pay
+                                        </button>
+                                    
+
+                                    {% if mode.cheque_mode %}
+                                        <button _ngcontent-asr-c30="" id="procced_to_pay"
+                                                type="button">Cheque Pay
+                                        </button>
+                                    {% endif %}
+
+                                {% endfor %}
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </fieldset>
+
+            <div _ngcontent-ygs-c30="" id="individual_date_time" style="display: none;">
+                <div _ngcontent-ygs-c30="" class="modal-content">
+                    <div _ngcontent-ygs-c30="" class="modal-header registration-form">
+                        <button _ngcontent-ygs-c30="" type="button"
+                                onclick="window.location.reload()" data-dismiss="modal"
+                                aria-hidden="true" class="close btn-first exit"> ×
+                        </button>
+                    </div>
+                    <div _ngcontent-ygs-c30="" class="modal-body select-time"><h4
+                            _ngcontent-ygs-c30="">Select Time</h4>
+                        <div _ngcontent-ygs-c30="" class="assessment-container">
+                            <div _ngcontent-ygs-c30="" class="form-bottom">
+                                <div _ngcontent-ygs-c30="" class="div-block"
+                                     style="min-height: 50vh;">
+                                    <div _ngcontent-ygs-c30="" class="row">
+                                        <div _ngcontent-ygs-c30="" class="col-md-4">
+                                            <div _ngcontent-ygs-c30="" class="dropdown"><label
+                                                    _ngcontent-ygs-c30="">2021-02-26</label><select
+                                                    _ngcontent-ygs-c30=""
+                                                    class="btn btn-primary dropdownSelect ng-untouched ng-pristine ng-valid">
+                                                <option _ngcontent-ygs-c30="" disabled="">Select
+                                                    Time
+                                                </option><!----></select></div><!----></div>
+                                        <!----></div><!----></div>
+                                <div _ngcontent-ygs-c30="" class="row termCondition">
+                                    <div _ngcontent-ygs-c30="" class="col-md-1"
+                                         style="text-align: right;"><input _ngcontent-ygs-c30=""
+                                                                           type="checkbox"
+                                                                           id="termsCondition"
+                                                                           name="terms"
+                                                                           value="1"></div>
+                                    <div _ngcontent-ygs-c30="" class="col-md-10 labelContent">
+                                        <label _ngcontent-ygs-c30="" for="termsCondition"> Check
+                                            here to indicate that you have read and agree to the
+                                            terms &amp; condition of the <span
+                                                    _ngcontent-ygs-c30="">Swim Time Solutions </span>
+                                            Agreement. </label></div>
+                                </div><!----></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div _ngcontent-ygs-c30="" id="booking_confirm" class="confirm-section"
+                 style="display: none;">
+                <div _ngcontent-ygs-c30="" class="modal-content">
+                    <div _ngcontent-ygs-c30="" class="modal-header registration-form">
+                        <button _ngcontent-ygs-c30="" type="button" data-dismiss="modal"
+                                onclick="window.location.reload()"
+                                aria-hidden="true" class="close btn-first"> ×
+                        </button>
+                    </div>
+                    <div _ngcontent-ygs-c30="" class="modal-body confirm-pay">
+                        <h4
+                                _ngcontent-ygs-c30="">Pay
+                            <To></To>
+                            Confirm
+                        </h4>
+                        <div _ngcontent-ygs-c30="" class="assessment-container">
+                            <div _ngcontent-ygs-c30="" class="form-bottom">
+                                <div _ngcontent-ygs-c30="" class="confirm-block">
+                                    <div _ngcontent-ygs-c30="" class="row">
+                                        <div _ngcontent-ygs-c30=""
+                                             class="col-md-8 col-md-offset-2">
+                                            <div _ngcontent-ygs-c30=""
+                                                 class="confirm-block-div">
+                                                <div _ngcontent-ygs-c30="" class="row">
+                                                    <div _ngcontent-ygs-c30=""
+                                                         class="col-md-12">
+                                                        <div _ngcontent-ygs-c30=""
+                                                             class="row confirm-block-inner">
+                                                            <div _ngcontent-ygs-c30=""
+                                                                 class="col-md-4 right-text left-text-left">
+                                                                <label _ngcontent-ygs-c30="">
+                                                                    Instructor Name: </label>
+                                                            </div>
+                                                            <div _ngcontent-ygs-c30=""
+                                                                 class="col-md-8 left-text">
+                                                                <!----></div><!----></div>
+                                                    </div>
+                                                    <div _ngcontent-ygs-c30="" class="col-md-8">
+                                                        <div _ngcontent-ygs-c30=""
+                                                             class="row confirm-block-inner">
+                                                            <div _ngcontent-ygs-c30=""
+                                                                 class="col-md-6 right-text">
+                                                                <label _ngcontent-ygs-c30="">
+                                                                    Course Duration: </label>
+                                                            </div>
+                                                            <div _ngcontent-ygs-c30=""
+                                                                 class="col-md-6 left-text">
+                                                                <!----></div>
+                                                        </div>
+                                                    </div>
+                                                    <div _ngcontent-ygs-c30="" class="col-md-4">
+                                                        <div _ngcontent-ygs-c30=""
+                                                             class="row confirm-block-inner">
+                                                            <div _ngcontent-ygs-c30=""
+                                                                 class="col-md-6 right-text">
+                                                                <label _ngcontent-ygs-c30="">
+                                                                    Fee: </label></div>
+                                                            <div _ngcontent-ygs-c30=""
+                                                                 class="col-md-6 left-text"><p
+                                                                    _ngcontent-ygs-c30="">$ </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div _ngcontent-ygs-c30="" class="row">
+                                                <div _ngcontent-ygs-c30="" class="col-md-12">
+                                                    <div _ngcontent-ygs-c30=""
+                                                         class="confirm-table">
+                                                        <table _ngcontent-ygs-c30=""
+                                                               class="table">
+                                                            <thead _ngcontent-ygs-c30="">
+                                                            <tr _ngcontent-ygs-c30="">
+                                                                <th _ngcontent-ygs-c30="">Date
+                                                                </th>
+                                                                <th _ngcontent-ygs-c30="">Time
+                                                                </th>
+                                                            </tr>
+                                                            </thead>
+                                                        </table>
+                                                        <div _ngcontent-ygs-c30=""
+                                                             class="table2">
+                                                            <table _ngcontent-ygs-c30="">
+                                                                <tr _ngcontent-ygs-c30="">
+                                                                    <td _ngcontent-ygs-c30="">
+                                                                        2021-02-09
+                                                                    </td>
+                                                                    <td _ngcontent-ygs-c30="">
+                                                                        -
+                                                                    </td>
+                                                                </tr><!---->
+                                                                <tbody _ngcontent-ygs-c30="">
+                                                                <!----></tbody><!----></table>
+                                                            <!----></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div _ngcontent-ygs-c30=""
+                                     class="next-btn-div registration-form">
+                                    <button _ngcontent-ygs-c30="" type="button">Pay</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div _ngcontent-ygs-c30="" id="paymentConfirm_data" style="display: none;">
+                <div _ngcontent-ygs-c30="" class="modal-content">
+                    <div _ngcontent-ygs-c30="" class="modal-body">
+                        <div _ngcontent-ygs-c30="" class="assessment-container">
+                            <div _ngcontent-ygs-c30="" class="form-bottom">
+                                <div _ngcontent-ygs-c30="" class="confirm-block">
+                                    <div _ngcontent-ygs-c30="" class="modal-body">
+                                        <div _ngcontent-ygs-c30="" class="assessment-container">
+                                            <div _ngcontent-ygs-c30="" class="form-bottom">
+                                                <div _ngcontent-ygs-c30=""
+                                                     class="confirm-block">
+                                                    <div _ngcontent-ygs-c30=""
+                                                         class="last-step"><img
+                                                            _ngcontent-ygs-c30=""
+                                                            src="assets/img/last-step.png"
+                                                            alt="image">
+                                                        <h3 _ngcontent-ygs-c30="">PAYMENT DONE
+                                                            SUCCESSFULLY</h3>
+                                                        <p _ngcontent-ygs-c30="">Your booking is
+                                                            confirmed. </p><a
+                                                                _ngcontent-ygs-c30=""
+                                                                data-dismiss="modal"
+                                                                onclick="window.location.reload()">DONE</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div _ngcontent-ygs-c30=""
+                                         class="row paymentSuccessContainer">
+                                        <div _ngcontent-ygs-c30="" class="col-md-12">
+                                            <div _ngcontent-ygs-c30="" class="row dataContent">
+                                                <div _ngcontent-ygs-c30="" class="col-md-4">
+                                                    <label _ngcontent-ygs-c30=""> Transaction
+                                                        ID: </label></div><!---->
+                                                <div _ngcontent-ygs-c30="" class="col-md-8">
+                                                    <!----></div>
+                                            </div>
+                                            <div _ngcontent-ygs-c30="" class="row dataContent">
+                                                <div _ngcontent-ygs-c30="" class="col-md-4">
+                                                    <label _ngcontent-ygs-c30=""> Instructor
+                                                        Name: </label></div><!---->
+                                                <div _ngcontent-ygs-c30="" class="col-md-8">
+                                                    <!----></div>
+                                            </div>
+                                            <div _ngcontent-ygs-c30="" class="row dataContent">
+                                                <div _ngcontent-ygs-c30="" class="col-md-4">
+                                                    <label _ngcontent-ygs-c30=""> Course
+                                                        Duration: </label><!----></div><!---->
+                                                <div _ngcontent-ygs-c30="" class="col-md-4">
+                                                    <label _ngcontent-ygs-c30=""></label></div>
+                                                <div _ngcontent-ygs-c30="" class="col-md-4">
+                                                    <label _ngcontent-ygs-c30=""> Time
+                                                        Duration: </label><!----></div><!---->
+                                            </div>
+                                            <div _ngcontent-ygs-c30="" class="row dataContent">
+                                                <div _ngcontent-ygs-c30="" class="col-md-4">
+                                                    <label _ngcontent-ygs-c30=""> Total
+                                                        Amount: </label><!----></div><!---->
+                                                <div _ngcontent-ygs-c30="" class="col-md-4">
+                                                    <label _ngcontent-ygs-c30=""> Paid
+                                                        Amount: </label><!----></div><!---->
+                                                <div _ngcontent-ygs-c30="" class="col-md-4">
+                                                    <label _ngcontent-ygs-c30=""> Due
+                                                        Amount: </label><!----></div><!---->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div _ngcontent-ygs-c30="" id="payment-popup" tabindex="-1" role="dialog"
+         aria-labelledby="myLargeModalLabel" data-backdrop="static" data-keyboard="false"
+         aria-hidden="true" class="modal fade login login-pop appointment">
+        <div _ngcontent-ygs-c30="" class="modal-dialog modal-lg">
+            <fieldset _ngcontent-ygs-c30="" id="calendar_popup"
+                      class="first-step first-fieldset-section">
+                <div _ngcontent-ygs-c30="" class="modal-content">
+                    <div _ngcontent-fqp-c30="" class="modal-header">
+                        <button _ngcontent-fqp-c30="" type="button" data-dismiss="modal" aria-hidden="true"
+                                onclick="window.location.reload()"
+                                class="close btn-first">×
+                        </button>
+                        <h4 _ngcontent-fqp-c30="">Payment</h4>
+                        <p _ngcontent-fqp-c30="">Choose Payment Method</p>
+                    </div>
+                    <div _ngcontent-fqp-c30="" class="modal-body">
+                        <div _ngcontent-fqp-c30="" class="assessment-container">
+                            <div _ngcontent-fqp-c30="" class="form-bottom">
+                                <div _ngcontent-fqp-c30="" class="tab-content pay-form">
+                                    <div _ngcontent-fqp-c30="" id="pay1" class="tab-pane fade in active">
+                                        <div _ngcontent-fqp-c30="" class="block">
+                                            <div _ngcontent-fqp-c30="" role="form" class="form-horizontal">
+                                                <div _ngcontent-fqp-c30="" class="col-md-6 left">
+                                                    <div _ngcontent-fqp-c30="" class="head-pay cradit"></div>
+                                                    <div _ngcontent-fqp-c30=""><img _ngcontent-fqp-c30=""
+                                                                                    src="{% static 'assets/img/card2.gif' %}"
+                                                                                    alt=""
+                                                                                    class="cardGif"></div>
+                                                </div>
+                                                <div _ngcontent-fqp-c30="" class="col-md-6 right">
+                                                    <div>
+                                                        <div _ngcontent-juj-c30="" class="head-pay cradit"><h3
+                                                                _ngcontent-juj-c30=""><span
+                                                                _ngcontent-juj-c30="">1</span>Payment for.</h3></div>
+                                                        <div class="confirm-block-div " style="padding: 5px;">
+                                                            <div class="" style="padding-left: 15px;">
+                                                                <div><h4>Instructor Name : <span
+                                                                        id="instructor_name1" style="font-size: 15px;"
+                                                                        class="text-secondary"></span></h4></div>
+                                                            </div>
+                                                            <div class="" style="padding-left: 15px;">
+                                                                <div><h4>Course Duration : <span
+                                                                        id="total_days1" style="font-size: 15px;"
+                                                                        class="text-secondary"></span> <span>Days</span>
+                                                                </h4></div>
+                                                            </div>
+                                                            <div class="" style="padding-left: 15px;">
+                                                                <div><h4>Amount : <span
+                                                                        id="fee1" style="font-size: 15px;"
+                                                                        class="text-secondary"></span></h4></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div _ngcontent-juj-c30="" class="head-pay cradit"><h3
+                                                            _ngcontent-juj-c30=""><span _ngcontent-juj-c30="">2</span>Payment
+                                                        Detail.</h3></div>
+                                                    <div class="confirm-block-div mx-5 checkout shadow">
+                                                        <div class="card-body">
+                                                            <div class="sr-root">
+                                                                <div class="sr-main">
+
+                                                                    <form id="payment-form" class="sr-payment-form">
+                                                                        {% csrf_token %}
+                                                                        <div class="sr-combo-inputs-row">
+                                                                            <label>CARD NUMBER</label>
+                                                                            <div class="form-control bg-secondary sr-input sr-card-element"
+                                                                                 id="card-number"></div>
+
+                                                                            <div class="">
+
+                                                                                <label>CVV</label>
+                                                                                <div class="form-control bg-secondary sr-input sr-card-element from-control"
+                                                                                     id="card-cvc"></div>
+                                                                                <label>EXPIRY DATE MM/YY</label>
+                                                                                <div class="form-control bg-secondary sr-input sr-card-element"
+                                                                                     id="card-exp"></div>
+                                                                            </div>
+                                                                            <div style="color:red;"
+                                                                                 class="sr-field-error"
+                                                                                 id="card-errors"
+                                                                                 role="alert"></div>
+                                                                            <br>
+                                                                            <button style="width: 100%;" id="submit"
+                                                                                    class="btn btn-primary">
+                                                                                <div class="spinner-border  spinner-border-sm text-light hidden"
+                                                                                     id="spinner" role="status">
+                                                                                    <span class="sr-only">Loading...</span>
+                                                                                </div>
+                                                                                <span id="button-text">Pay</span>
+                                                                                <span id="order-amount"></span>
+                                                                            </button>
+                                                                    </form>
+                                                                    <div class="sr-result hidden">
+                                                                        <p>Payment completed<br></p>
+                                                                        <pre>
+                        <code></code>
+                      </pre>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <form id="payload" class="hidden" action="stripe/payment/"
+                                                          method="post">
+                                                        {% csrf_token %}
+                                                        <input id="booking_id" type="hidden" name="booking"
+                                                               value="5">
+                                                        <input id="payment_type" type="hidden" name="">
+                                                        <input id="data-payload" type="hidden" name="payload"/>
+                                                    </form>
+
+                                                </div>
+                                                {#                                                    <div _ngcontent-fqp-c30="" class="head-pay cradit"><h3#}
+                                                {#                                                            _ngcontent-fqp-c30=""><span _ngcontent-fqp-c30="">1</span>Payment#}
+                                                {#                                                        Info.</h3></div>#}
+                                                {#                                                    <div _ngcontent-fqp-c30="" class="confirm-block-div">#}
+                                                {#                                                        <div _ngcontent-fqp-c30="" class="row">#}
+                                                {#                                                            <div _ngcontent-fqp-c30="" class="col-md-12">#}
+                                                {#                                                                <div _ngcontent-fqp-c30=""#}
+                                                {#                                                                     class="row confirm-block-inner">#}
+                                                {#                                                                    <div _ngcontent-fqp-c30=""#}
+                                                {#                                                                         class="col-md-5 right-text left-text-left">#}
+                                                {#                                                                        <label _ngcontent-fqp-c30=""> Instructor#}
+                                                {#                                                                            Name: </label></div>#}
+                                                {#                                                                    <div _ngcontent-fqp-c30=""#}
+                                                {#                                                                         class="col-md-7 left-text"><p#}
+                                                {#                                                                            _ngcontent-fqp-c30="">samar verma</p><!---->#}
+                                                {#                                                                    </div><!----></div>#}
+                                                {#                                                            </div>#}
+                                                {#                                                            <div _ngcontent-fqp-c30="" class="col-md-12">#}
+                                                {#                                                                <div _ngcontent-fqp-c30=""#}
+                                                {#                                                                     class="row confirm-block-inner">#}
+                                                {#                                                                    <div _ngcontent-fqp-c30=""#}
+                                                {#                                                                         class="col-md-5 right-text"><label#}
+                                                {#                                                                            _ngcontent-fqp-c30=""> Course#}
+                                                {#                                                                        Duration: </label></div>#}
+                                                {#                                                                    <div _ngcontent-fqp-c30=""#}
+                                                {#                                                                         class="col-md-7 left-text"><p#}
+                                                {#                                                                            _ngcontent-fqp-c30="">2 days</p><!---->#}
+                                                {#                                                                    </div>#}
+                                                {#                                                                </div>#}
+                                                {#                                                            </div>#}
+                                                {#                                                            <div _ngcontent-fqp-c30="" class="col-md-12">#}
+                                                {#                                                                <div _ngcontent-fqp-c30=""#}
+                                                {#                                                                     class="row confirm-block-inner">#}
+                                                {#                                                                    <div _ngcontent-fqp-c30=""#}
+                                                {#                                                                         class="col-md-5 right-text"><label#}
+                                                {#                                                                            _ngcontent-fqp-c30=""> Fee: </label></div>#}
+                                                {#                                                                    <div _ngcontent-fqp-c30=""#}
+                                                {#                                                                         class="col-md-7 left-text"><p#}
+                                                {#                                                                            _ngcontent-fqp-c30=""><span#}
+                                                {#                                                                            _ngcontent-fqp-c30="">$</span> 8000</p>#}
+                                                {#                                                                    </div>#}
+                                                {#                                                                </div>#}
+                                                {#                                                            </div>#}
+                                                {#                                                        </div>#}
+                                                {#                                                    </div>#}
+                                                {#                                                    <form _ngcontent-fqp-c30="" id="payment-form" novalidate=""#}
+                                                {#                                                          autocomplete="off"#}
+                                                {#                                                          role="form"#}
+                                                {#                                                          class="form-horizontal sr-payment-form ng-untouched ng-pristine ng-invalid">#}
+                                                {#                                                        <div _ngcontent-fqp-c30="" class="form-horizontal checkout">#}
+                                                {##}
+                                                {#                                                            <div class="text-center">#}
+                                                {#                                                                <div class="sr-field-error" style="color: red;" id="card-errors"#}
+                                                {#                                                                 role="alert"></div>#}
+                                                {#                                                            </div>#}
+                                                {#                                                            <div _ngcontent-fqp-c30="" class="row">#}
+                                                {#                                                                <div _ngcontent-fqp-c30="" class="col-md-12">#}
+                                                {#                                                                    <div _ngcontent-fqp-c30="" class="form-group"><label#}
+                                                {#                                                                            _ngcontent-fqp-c30="" for="card_num">CARD#}
+                                                {#                                                                        NUMBER</label>#}
+                                                {#                                                                        <div class="form-control ng-untouched ng-pristine ng-invalid sr-input sr-card-element"#}
+                                                {#                                                                             id="card-number">#}
+                                                {#                                                                            <!-- Stripe ccard element will inserted here -->#}
+                                                {#                                                                        </div>#}
+                                                {#                                                                    </div>#}
+                                                {#                                                                </div>#}
+                                                {#                                                            </div>#}
+                                                {#                                                            <div _ngcontent-fqp-c30="" class="row two-part">#}
+                                                {#                                                                <div _ngcontent-fqp-c30="" class="col-md-6 left-part">#}
+                                                {#                                                                    <div _ngcontent-fqp-c30="" class="form-group"><label#}
+                                                {#                                                                            _ngcontent-fqp-c30="" for="exp_month">EXPIRY#}
+                                                {#                                                                        DATE MM/YY </label>#}
+                                                {#                                                                        <div class="form-control ng-untouched ng-pristine ng-invalid  sr-input sr-card-element"#}
+                                                {#                                                                             id="card-exp">#}
+                                                {#                                                                            <!-- Stripe exp element will inserted here -->#}
+                                                {#                                                                        </div>#}
+                                                {#                                                                    </div>#}
+                                                {#                                                                </div>#}
+                                                {#                                                                <div _ngcontent-fqp-c30="" class="col-md-6">#}
+                                                {#                                                                    <div _ngcontent-fqp-c30=""#}
+                                                {#                                                                         class="form-group right-part"><label#}
+                                                {#                                                                            _ngcontent-fqp-c30="" for="exp_year"> CVV#}
+                                                {#                                                                         </label>#}
+                                                {#                                                                        <div class="form-control ng-untouched ng-pristine ng-invalid   sr-input sr-card-element from-control"#}
+                                                {#                                                                             id="card-cvc">#}
+                                                {#                                                                            <!-- stripe cvv element will inserted here  -->#}
+                                                {#                                                                        </div>#}
+                                                {#                                                                    </div>#}
+                                                {#                                                                </div>#}
+                                                {#                                                            </div>#}
+                                                {##}
+                                                {##}
+                                                {#                                                        </div>#}
+                                                {#                                                        <div _ngcontent-fqp-c30=""#}
+                                                {#                                                             class="next-btn-div registration-form">#}
+                                                {##}
+                                                {#                                                            <button id="submit" class="btn btn-dark">#}
+                                                {#                                                                <div class="spinner-border  spinner-border-sm text-light hidden"#}
+                                                {#                                                                     id="spinner" role="status">#}
+                                                {#                                                                    <span class="sr-only">Loading...</span>#}
+                                                {#                                                                </div>#}
+                                                {#                                                                <span id="button-text">Pay Now</span>#}
+                                                {##}
+                                                {#                                                            </button>#}
+                                                {#                                                        </div>#}
+                                                {#                                                        <div class="sr-result hidden">#}
+                                                {#                                                            <p>Payment completed<br></p>#}
+                                                {#                                                            <pre>#}
+                                                {#                                                            <code></code>#}
+                                                {#                                                          </pre>#}
+                                                {#                                                        </div>#}
+                                                {#                                                        <div class="form-main">#}
+                                                {#                                                            <form id="payload" class="hidden" action="stripe/payment/"#}
+                                                {#                                                                  method="post">#}
+                                                {#                                                                {% csrf_token %}#}
+                                                {#                                                                <input id="data-payload" type="hidden" name="payload"/>#}
+                                                {#                                                            </form>#}
+                                                {#                                                        </div>#}
+                                                {##}
+                                                {#                                                    </form>#}
+                                                {#                                                    <div class="sr-result hidden">#}
+                                                {#                                                            <p>Payment completed<br></p>#}
+                                                {#                                                            <pre>#}
+                                                {#                                                            <code></code>#}
+                                                {#                                                          </pre>#}
+                                                {#                                                        </div>#}
+                                                {##}
+                                                {#                                                </div>#}
+                                                {#                                                <div class="form-main">#}
+                                                {#                                                            <form id="payload" class="hidden" action="stripe/payment/"#}
+                                                {#                                                                  method="post">#}
+                                                {#                                                                {% csrf_token %}#}
+                                                {#                                                                <input id="data-payload" type="hidden" name="payload"/>#}
+                                                {#                                                            </form>#}
+                                                {#                                                        </div>#}
+                                                {#                                            </div>#}
+                                                {#                                        </div>#}
+                                                {#                                    </div>#}
+                                                {##}
+                                                {#                                </div>#}
+                                                {#                            </div>#}
+                                                {#                        </div>#}
+                                                {#                    </div>#}
+
+
+                                            </div>
+            </fieldset>
+
+        </div>
+    </div>
+
+
+    <script type="text/javascript" src="lib.js"></script>
+
+
+
+
+    <script>
+        $('#amount_to_be_paid1').on('click', () => {
+            $(".amount1").text("");
+        })
+
+        {#function checkdate() {#}
+        {#    var dtToday = new Date();#}
+        {##}
+        {#    var month = dtToday.getMonth() + 1;#}
+        {#    var day = dtToday.getDate() - 1;#}
+        {#    var year = dtToday.getFullYear() - 8;#}
+        {#    console.log(month, day, year)#}
+        {#    if (month < 10)#}
+        {#        month = '0' + month.toString();#}
+        {#    if (day < 10)#}
+        {#        day = '0' + day.toString();#}
+        {#    console.log(month, day, year)#}
+        {#    var maxDate = year + '-' + month + '-' + day;#}
+        {#    $('#DateOfBirth').attr('max', maxDate);#}
+      //  {#}#}
+
+    </script>
+    <script>
+
+        var class_payment_range;
+        $("#cash_payment_btn").click(function () {
+            var amt = $('#amount_to_be_paid1').val();
+            {#var first_payment = {{first_payment.payment_range}};#}
+            {#if#}
+            var x = $('#fee').text();
+            console.log(parseInt(x.substring(1,)));
+            if ((amt <= 0) || (amt > (parseInt(x.substring(1,))))) {
+
+                $("#error_meesage").text("Enter Valid Amount  ");
+
+            } else if ((amt) < (parseInt(x.substring(1,))) * class_payment_range / 100) {
+
+                {#console.log("success", class_payment_range);#}
+
+                $("#error_meesage").text("You have to pay minimum "+ class_payment_range +"% of amount  ");
+
+            } else {
+                $("#form_to_be").submit()
+
+            }
+        });
+        //
+        // Used to handle Pay
+        // start
+
+        $("#procced_to_pay").click(function () {
+            // Calling Intent API using fetch
+            var instructor_name = $('#instructor_name').text();
+            var booking_id = $('#booking_id_span').text();
+            var x = $('#fee').text();
+            var amt = $('#amount_to_be_paid1').val();
+            {#var first_payment = {{first_payment.payment_range}};#}
+
+            console.log("card", class_payment_range)
+            if ((amt <= 0) || (amt > (parseInt(x.substring(1,))))) {
+
+                $("#error_meesage").text("Enter Valid Amount");
+
+            } else if ((amt) < (parseInt(x.substring(1,))) * class_payment_range / 100) {
+
+                console.log("success", class_payment_range);
+
+
+                $("#error_meesage").text("You have to pay minimum "+ class_payment_range +"% of amount  ");
+
+            } else {
+                $('#fee1').text("$" + amt);
+                $("#payment-popup").modal('show');
+
+
+                var payment_type = 2;
+                var orderData = {
+                    items: [{booking: booking_id, payment_type: payment_type}],
+                    currency: "usd",
+                    amount: amt,
+                };
+                fetch("{{ BASE_URL }}/stripe/create-payment-intent", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(orderData)
+                })
+                    .then(function (result) {
+                        if (result.status == 200) {
+                            {#$("#appointment-popup").modal('show');#}
+                            {# $("#choose_payment_popup").modal('hide');#}
+                            $("#payment-popup").modal('show');
+                            return result.json();
+
+
+                        } else if (result.status === 422) {
+                            {#console.log(result.error())#}
+                            $("#error_meesage").text("Amount should not grater than due amount ");
+                            console.log("Error");
+                        } else {
+                            $("#error_meesage").text("Please recheck the details you have provided")
+                            console.log("Error");
+                        }
+
+                    })
+                    .then(function (data) {
+                        console.log(data);
+                        return setupElements(data);
+                    })
+                    .then(function ({stripe, card, clientSecret}) {
+
+                        document.getElementById("submit").disabled = false;
+
+                        // Handle form submission.
+                        var form = document.getElementById("payment-form");
+                        form.addEventListener("submit", function (event) {
+                            event.preventDefault();
+                            // Initiate payment when the submit button is clicked
+                            pay(stripe, card, clientSecret);
+                        });
+                    });
+
+            }
+
+        });
+        //end
+
+        // Stripe API Code From Here
+
+
+        // Set up Stripe.js and Elements to use in checkout form
+        var setupElements = function (data) {
+            stripe = Stripe(data.publishableKey);
+            var elements = stripe.elements();
+            var style = {
+
+                base: {
+                    {#borderColor:"red",#}
+                    color: "black",
+                    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                    fontSmoothing: "antialiased",
+                    fontSize: "16px",
+                    "::placeholder": {
+                        color: "#aab7c4"
+                    }
+                },
+                invalid: {
+                    color: "#fa755a",
+                    iconColor: "#fa755a"
+                }
+            };
+
+            {#var card = elements.create("card", { style: style });#}
+            {#card.mount("#card-element");#}
+            // Card number
+            var card = elements.create('cardNumber', {
+                'placeholder': 'Card Number',
+                'style': style
+            });
+            card.mount('#card-number');
+
+            // CVC
+            var cvc = elements.create('cardCvc', {
+                'placeholder': 'CVC',
+                'style': style
+            });
+            cvc.mount('#card-cvc');
+
+            // Card expiry
+            var exp = elements.create('cardExpiry', {
+                'placeholder': 'Card Expiry',
+                'style': style
+            });
+            exp.mount('#card-exp');
+            return {
+                stripe: stripe,
+                card: card,
+                clientSecret: data.clientSecret
+            };
+        };
+
+        /*
+         * CStripePaymentSerializeralls stripe.confirmCardPayment which creates a pop-up modal to
+         * prompt the user to enter extra authentication details without leaving your page
+         */
+        var pay = function (stripe, card, clientSecret) {
+            changeLoadingState(true);
+
+            // Initiate the payment.
+            // If authentication is required, confirmCardPayment will automatically display a modal
+            stripe
+                .confirmCardPayment(clientSecret, {
+                    payment_method: {
+                        card: card
+                    }
+                })
+                .then(function (result) {
+                    if (result.error) {
+                        // Show error to your customer
+                        showError(result.error.message);
+                    } else {
+                        // The payment has been processed!
+                        orderComplete(clientSecret);
+                    }
+                });
+        };
+
+        /* ------- Post-payment helpers ------- */
+
+        /* Shows a success / error message when the payment is complete */
+        var orderComplete = function (clientSecret) {
+            // Just for the purpose of the sample, show the PaymentIntent response object
+            stripe.retrievePaymentIntent(clientSecret).then(function (result) {
+                var paymentIntent = result.paymentIntent;
+                var paymentIntentJson = JSON.stringify(paymentIntent, null, 2);
+
+                // post data and show new page
+                var form2 = document.getElementById("payload");
+                var input = document.getElementById("data-payload")
+                input.value = paymentIntentJson;
+                form2.submit();
+                changeLoadingState(false);
+            });
+        };
+
+        var showError = function (errorMsgText) {
+            changeLoadingState(false);
+            var errorMsg = document.querySelector(".sr-field-error");
+            errorMsg.textContent = errorMsgText;
+            setTimeout(function () {
+                errorMsg.textContent = "";
+            }, 4000);
+        };
+
+        // Show a spinner on payment submission
+        var changeLoadingState = function (isLoading) {
+            if (isLoading) {
+                document.getElementById("submit").disabled = true;
+                document.querySelector("#spinner").classList.remove("hidden");
+                document.querySelector("#button-text").classList.add("hidden");
+            } else {
+                document.getElementById("submit").disabled = false;
+                document.querySelector("#spinner").classList.add("hidden");
+                document.querySelector("#button-text").classList.remove("hidden");
+            }
+        };
+
+
+        // End Stripe Api code
+
+
+        setTimeout(function () {
+            if ($('#msg').length > 0) {
+                $('#msg').remove();
+            }
+        }, 2000)
+
+        $("#nextbtn").hide();
+        $('#checkbox_select').click(function () {
+            var checkbox_value = $('#checkbox_select').val()
+            console.log(checkbox_value)
+
+            if (checkbox_value === "0") {
+                console.log("test")
+                $('#checkbox_select').val("1")
+                $("#nextbtn").show();
+            } else {
+                $('#checkbox_select').val("0")
+                $("#nextbtn").hide();
+            }
+
+        });
+        $(".termsconditions").hide();
+
+
+        $("#nextbtn1").hide();
+        $('#checkbox_select1').click(function () {
+            var checkbox_value = $('#checkbox_select1').val()
+            console.log(checkbox_value)
+
+            if (checkbox_value === "0") {
+                $('#checkbox_select1').val("1")
+                $("#nextbtn1").show();
+            } else {
+                $('#checkbox_select1').val("0")
+                $("#nextbtn1").hide();
+            }
+
+        });
+
+        function bgchange(classname) {
+            $(".times").removeAttr('id')
+           // console.log("hii", classname)
+            $(".times").css({"background-color": "#d4d1d1", "color": "black"});
+            $(".checkbox").css({"background-color": "#d4d1d1", "color": "black"});
+            $(".ttime" + classname).css({"background-color": "#073767", "color": "white"});
+            $(".checkbox" + classname).css({"background-color": "#073767", "color": "white"})
+            $(".ttime" + classname).attr('id', 'selected_date');
+
+        }
+
+        {#$('#checkbox_select').hide();#}
+
+        function get_today_date() {
+            var d = new Date();
+            month = '' + (d.getMonth() + 1);
+            day = '' + d.getDate();
+            year = d.getFullYear();
+
+            if (month.length < 2)
+                month = '0' + month;
+            if (day.length < 2)
+                day = '0' + day;
+
+            return [year, month, day].join('-');
+
+        }
+        function get_today_date1() {
+            
+            
+            var options = { timeZone: 'America/New_York', month: '2-digit', day: '2-digit', year: 'numeric' };
+
+            var formattedDate = new Date().toLocaleDateString('en-US', options);
+
+            console.log(typeof(formattedDate))
+
+            var parts=formattedDate.split('/')
+
+            var date=parts[2]+'-'+parts[0]+'-'+parts[1]
+
+            return date
+          }
+
+        function check() {
+
+
+            var class_instructor = parseInt(localStorage.getItem('class_instructor_id'))
+            console.log("class_instructor",class_instructor);
+            var start_date = localStorage.getItem('Date')
+            console.log("start_date",start_date);
+            var todayd = new Date(start_date);
+            console.log("todayd",todayd);
+            var dd = String(todayd.getDate()).padStart(2, '0');
+            console.log("dd",dd);
+            var mm = String(todayd.getMonth() + 1).padStart(2, '0'); //January is 0!
+            console.log("mm",mm);
+            var yyyy = todayd.getFullYear();
+            console.log("yyyy",yyyy);
+            var today = yyyy + '-' + mm + '-' + dd;
+            console.log("today",today);
+            var todays_date = get_today_date()
+            console.log("todays_date",todays_date);
+            //  console.log(today, todays_date)
+
+            $.ajax({
+            
+                    url: '{{ BASE_URL }}/timeslots?class_instructor=' + class_instructor + '&start_date=' + today,
+                    dataType: 'json',
+                    success: function (data) {
+                        $(".termsconditions").show();
+
+                        if (data.time.length > 0) {
+
+                            var row1 = ''
+                            let timing=(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' })).substring(10);
+                            if(timing[0]==" "){
+                                timing="0"+timing.slice(1)
+                            }
+                            let hourUs=timing.substring(0,2)
+                            let minutesdUs=timing.substring(3,5)
+                            for (var i = 0; i < data.time.length; i++) {
+                                if (today === todays_date) {
+                                    if ((((data.time[i]).substring(0, 2)) >=hourUs )){
+                                    if (((((data.time[i]).substring(3, 5))>minutesdUs ) &&(((data.time[i]).substring(0, 2)) == hourUs)) || (((data.time[i]).substring(0, 2)) != hourUs))
+                                    {      
+                                        console.log("heloo",data.time[i])                             
+                                        var a = data.time[i]
+                                        var b = a.slice(0, 5) + a.slice(8, 16)
+
+
+                                        row1 = row1 + '<div _ngcontent-crr-c30="" class="checkbox checkbox' + i + '  " onclick=bgchange(' + i + ')><input type="button" name="sample" _ngcontent-crr-c30="" value="' + String(data.time[i]) + '" class="times ttime' + i + '" onclick=bgchange(' + i + ')>' + b + '</input></div>';
+                                        $('.timeSelectContent').html(row1);
+
+                                    }
+                                }
+
+                                } else {
+                                    var a = data.time[i]
+                                    console.log("a",a)
+                                    var b = a.slice(0, 5) + a.slice(8, 16)
+                                    row1 = row1 + '<div _ngcontent-crr-c30="" class="checkbox checkbox' + i + ' " onclick=bgchange(' + i + ')><input type="button" name="sample" _ngcontent-crr-c30="" value="' + String(data.time[i]) + '" class="times ttime' + i + '" onclick=bgchange(' + i + ')>' + b + '</input></div>';
+                                    $('.timeSelectContent').html(row1);
+                                }
+
+
+                            }
+
+                        } else {
+                            window.alert("no class Available")
+                        }
+                    },
+                    error: function (data) {
+
+                        if (data.responseJSON.error === undefined || data.responseJSON.error === null) {
+                            window.alert("Please Select Upcoming Date's.")
+                            $('.timeSelectContent').html("")
+                        } else {
+                            window.alert(data.responseJSON.error)
+                            $('.timeSelectContent').html("")
+                        }
+                    },
+
+                }
+                
+            )
+        }
+
+
+    
+
+        function check_individual() {
+
+            var class_instructor = parseInt(localStorage.getItem('class_instructor_id'))
+            var individual_Date = localStorage.getItem('individual_Date')
+            var arr = JSON.parse("" + individual_Date + "");
+            arr.sort(function (a, b) {
+                a = a.split('-').reverse().join('-');
+                b = b.split('-').reverse().join('-');
+                return a > b ? 1 : a < b ? -1 : 0;
+            });
+            var payload = {'class_instructor': class_instructor, 'date_list': arr}
+            if (individual_Date === null) {
+                window.alert("Please Select Dates ! ");
+            } else {
+                $.ajax({
+                        url: '{{ BASE_URL }}/individual-slot',
+                        type: 'POST',
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(payload),
+                        success: function (data) {
+
+
+                            // $('#calendar').find(".ui-state-default").removeClass("ui-state-active");
+                            //  DeleteDTW(); localStorage.removeItem('individual_Date')
+                            document.querySelector("#accordion").innerHTML = "";
+                            //  localStorage.removeItem('individual_Date')
+                            
+                            $(".termsconditions").show();
+                            let timing=(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' })).substring(10);
+                            if(timing[0]==" "){
+                                timing="0"+timing.slice(1)
+                            }
+                            let hourUs=timing.substring(0,2)
+                            let minutesdUs=timing.substring(3,5)
+                    
+                            for (var i = 0; i < data.length; i++) {
+                                for (const [key, value] of Object.entries(data[i])) {
+                                    $("#accordion").append('<h3>' + key + '</h3><select style="width: 52% !important; margin-left: 25% !important;" class="form-control select_tag" aria-label="Default select example" id="' + key + '" ><option selected disabled id="options" value="" required="">Please Select Time</option></select><br><br>')
+
+                                    // console.log(key);
+                                    for (var j = 0; j < value.length; j++) {
+                                        // console.log(value[j])
+                                        var todays_date = get_today_date1()
+                                        console.log(key,"ustime",todays_date)
+                                        if (key == todays_date) {
+                                            console.log(hourUs,"ushr",(value[j]).substring(0, 2))
+                                            if ((((value[j]).substring(0, 2)) >=hourUs ))
+                                           {
+                                            if (((((value[j]).substring(3, 5))>minutesdUs ) &&(((value[j]).substring(0, 2)) == hourUs)) || (((value[j]).substring(0, 2)) != hourUs))
+                                                
+                                            {
+                                                console.log("3rd if hai ye")    
+                                                //console.log(value[j])
+                                                var a = value[j];
+                                                var b = a.slice(0, 5) + a.slice(8, 16)
+                                                console.log(b)
+                                                $("#" + todays_date).append('<option id="options" value="' + value[j] + '">' + b + '</option>')
+                                            }
+                                        }
+                                    }
+                                    else {
+                                          //  console.log(value[j])
+                                            //var a = data.time[value[j]]
+                                            var a = value[j];
+                                            var b = a.slice(0, 5) + a.slice(8, 16)
+                                            console.log(b)
+                                            $("#" + key).append('<option id="options" value="' + value[j] + '">' + b + '</option>')
+                                        }
+
+                                    }
+                                }
+                            }
+
+
+                        },
+
+                        error: function (data) {
+
+                            if (data.status === 406) {
+                                if (data.responseJSON.error) {
+                                    window.alert(data.responseJSON.error)
+
+                                } else {
+                                    window.alert(data.responseJSON.date_list)
+                                }
+                            } else if (data.status === 400) {
+
+                                window.alert(data.responseJSON.error)
+                            } else {
+
+                            }
+                        },
+
+                    }
+                )
+            }
+
+        }
+
+        $("#nextbtn").click(function () {
+           // console.log("button clicked")
+          //  console.log("hii")
+            start_date = localStorage.getItem('Date')
+            console.log("start_date",start_date);
+          //  console.log("hii")
+            var time = $("#selected_date").val();
+            console.log("time",time);
+            var kids = document.getElementById("kids").value;
+            console.log("kids",kids)
+            if (time === undefined || time === [] || time === null || time === '0') {
+                window.alert("please select time slot")
+            } else if (kids === '0') {
+                window.alert("please select student name")
+
+            } else {
+                $('#nextbtn').attr('data-target', "#details-popup")
+                $('#nextbtn').attr('data-toggle', "modal")
+                console.log(start_date.slice(1, -1) + "T" + time.slice(0, 8))
+                var date_time = start_date.slice(1, -1) + "T" + time.slice(0, 8)
+
+                var class_instructor = localStorage.getItem('class_instructor_id')
+                $.ajax({
+                    url: '{% url "booking" %}' + '?date_time=' + date_time + '&class_instructor=' + class_instructor + '&paper_work=1&kids_id=' + kids,
+                    method: 'GET',
+                    dataType: "JSON",
+                    success: function (data) {
+                        console.log(data)
+                        $('#bid').val(data.booking);
+                        $('#booking_id_span').text(data.booking);
+                        $('#instructor_name').text(data.instructor);
+                        $('#kids_name1').text(data.kids_name);
+                        $('#total_days').text(data.total_days);
+                        $('#fee').text("$" + data.fee);
+                        $('#amount_to_be_paid').text(data.fee)
+                        $('#instructor_name1').text(data.instructor)
+                        $('#total_days1').text(data.total_days)
+                        {#$('#procced_to_pay').text(data.class_payment_range)#}
+                        class_payment_range = data.class_payment_range;
+
+
+
+
+
+                        for (const [key, value] of Object.entries(data.appointments)) {
+
+                            let time_for_table = ""
+                            for (const [key1, value1] of Object.entries(value)) {
+                                time_for_table = time_for_table.slice(2,) + " - " + value1
+                                console.log("time_for_table",time_for_table);
+
+
+                            }
+                            $("#date_time_table").append('<tr _ngcontent-asr-c30="">' +
+                                '<td _ngcontent-asr-c30="" id="date_field">' + key + '</td>' +
+                                '<td _ngcontent-asr-c30="" id="time_field"> ' + time_for_table + ' </td></tr>')
+                        }
+
+                    },
+                });
+            }
+        });
+
+        if (window.performance) {
+            console.info("window.performance works fine on this browser");
+        }
+        console.info(performance.navigation.type);
+        if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
+            localStorage.removeItem("Date");
+            localStorage.removeItem("individual_Date")
+            console.info("This page is reloaded");
+        } else {
+            console.info("This page is not reloaded");
+        }
+
+    </script>
+    <script>
+        $('#details-popup').hover(function () {
+            $('#appointment-popup').hide();
+        });
+        // payment model
+        $("#payment-popup").hover(function () {
+            $("#details-popup").hide();
+        });
+        //end
+    </script>
+    <script>
+        $("#nextbtn1").click(function () {
+
+
+            var t1 = document.getElementsByClassName("select_tag").length;
+            //console.log(t1);
+            for (var i = 0; i < t1; i++) {
+                var t = document.getElementsByClassName("select_tag")[i].value;
+                var kids = document.getElementById("kids1").value;
+                console.log(kids)
+
+
+                if (t == "") {
+                    alert("please select time slot.");
+                    break;
+                }
+                if (kids === '0') {
+                    window.alert("please select student")
+                    break;
+
+                }
+                if (t1 - 1 == i) {
+                    {#console.log("datlist.slice(1,-1)");#}
+                    $('#nextbtn1').attr('data-target', "#details-popup")
+                    $('#nextbtn1').attr('data-toggle', "modal")
+                    var datlist = localStorage.getItem('individual_Date')
+                    //console.log(datlist.slice(1,-1))
+                    var datelist = (datlist.slice(1, -1)).split(",")
+                    console.log(datelist)
+                    var list = []
+                    for (var i = 0; i < datelist.length; i++) {
+                        var time = $("#" + datelist[i].slice(1, -1)).val()
+
+                        list.push(datelist[i].slice(1, -1) + "T" + time.substring(0, 8))
+                    }
+                    console.log(list)
+                    var class_instructor = parseInt(localStorage.getItem('class_instructor_id'))
+                    var payload = {
+                        'class_instructor': class_instructor,
+                        'datetime_list': list,
+                        'paper_work': 'True',
+                        'kids_id': kids
+                    }
+                    $.ajax({
+                        url: '{{ BASE_URL }}/individual-booking',
+                        type: 'POST',
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(payload),
+                        success: function (data) {
+                            console.log("success", data)
+                            $('#bid').val(data.booking);
+                            $('#booking_id_span').text(data.booking);
+                            $('#instructor_name').text(data.instructor);
+                            $('#kids_name1').text(data.kids_name);
+                            console.log(data.kids_name)
+                            $('#total_days').text(data.total_days);
+                            $('#fee').text("$" + data.fee);
+                            $('#amount_to_be_paid').text(data.fee)
+                            $('#instructor_name1').text(data.instructor)
+                            $('#total_days1').text(data.total_days)
+                            class_payment_range = data.class_payment_range;
+                            console.log("individual data", data.dateTime)
+                            for (const [key1, value1] of Object.entries(data.dateTime)) {
+                                for (const [key2, value2] of Object.entries(value1)) {
+                                    console.log(key2, value2)
+                                    $("#date_time_table").append('<tr _ngcontent-asr-c30="">' +
+                                        '<td _ngcontent-asr-c30="" id="date_field">' + key2 + '</td>' +
+                                        '<td _ngcontent-asr-c30="" id="time_field"> ' + value2 + ' </td></tr>')
+                                }
+
+                            }
+                        },
+                        error: function (data) {
+                            console.log(JSON.stringify(data))
+                            if (data.status === 406) {
+                                window.alert("Please Select Upcoming Date's.")
+                            } else if (data.status === 400) {
+                                window.alert("error")
+                            } else {
+                                window.alert(data.responseJSON.error)
+                                $('.timeSelectContent').html("")
+                            }
+                        },
+                    });
+                }
+
+
+            }
+        });
+    </script>
+    <script>
+        window.onload = function () {
+            $.ajax({
+                url: '{{ BASE_URL }}/swim/delete-booking',
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    console.log("success")
+                },
+            });
+        };
+    </script>
+    <script>
+        function menu2buttonhide() {
+            // $("#nextbtn1").show();
+            $("#nextbtn").hide();
+            $('#checkbox_select').val("0")
+            document.getElementById("checkbox_select").checked = false;
+
+        }
+
+        function menu1buttonhide() {
+            //$("#nextbtn").show();
+            $("#nextbtn1").hide();
+            $('#checkbox_select1').val("0")
+            document.getElementById("checkbox_select1").checked = false;
+
+        }
+    </script>
+    <script>
+        var inputBox = document.getElementById("amount_to_be_paid1");
+
+        var invalidChars = [
+            "E",
+            "e",
+        ];
+
+        inputBox.addEventListener("keydown", function (e) {
+            if (invalidChars.includes(e.key)) {
+                e.preventDefault();
+                console.log("Success")
+            }
+        });
+
+    </script>
+    </a>{% endblock %}
